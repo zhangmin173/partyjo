@@ -7,17 +7,86 @@
   <script>
     !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
   </script>
-  <script src="./lib/jquery/jquery-3.2.1.min.js"></script>
-  <title>title</title>
-  <style>
-
-  </style>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="js/common.js"></script>
+  <!-- 插件资源 -->
+  <link rel="stylesheet" href="lib/owlcarousel/owl.carousel.min.css">
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/index.css">
+  <title>办事答题</title>
 </head>
 <body>
-  <div class="box4">
-    <canvas id="j-canvas">
-
-    </canvas>
+  <div class="banner j-owl">
+    <a class="" href=""><img src="img/banner_1.jpg"></a>
+    <a class="" href=""><img src="img/banner_1.jpg"></a>
+    <a class="" href=""><img src="img/banner_1.jpg"></a>
   </div>
+  <div class="menu-wrap">
+    <a class="menu">
+      <div class="menu-icon"></div>
+      <div class="menu-name">办事指南</div>
+    </a>
+    <a class="menu">
+      <div class="menu-icon"></div>
+      <div class="menu-name">办件查询</div>
+    </a>
+    <a class="menu">
+      <div class="menu-icon"></div>
+      <div class="menu-name">网上咨询</div>
+    </a>
+    <a class="menu">
+      <div class="menu-icon"></div>
+      <div class="menu-name">个人中心</div>
+    </a>
+  </div>
+  <div class="block-wrap">
+    <div class="block-wrap-title">
+      快捷功能
+      <a class="more" href="" title="">更多</a>
+    </div>
+    <a class="block">
+      <div class="block-icon"></div>
+      <div class="block-name">办事指南</div>
+    </a>
+    <a class="block">
+      <div class="block-icon"></div>
+      <div class="block-name">办件查询</div>
+    </a>
+    <a class="block">
+      <div class="block-icon"></div>
+      <div class="block-name">网上咨询</div>
+    </a>
+    <a class="block">
+      <div class="block-icon"></div>
+      <div class="block-name">个人中心</div>
+    </a>
+    <a class="block">
+      <div class="block-icon"></div>
+      <div class="block-name">个人中心</div>
+    </a>
+  </div>
+  <div class="news-wrap">
+    <div class="news-wrap-title">
+      新闻资讯
+      <a class="more" href="" title="">更多</a>
+    </div>
+    <div>
+      <a class="news">
+        <div class="news-title">办事指南办事指南办事指南办事指南办事指南办事指南办事指南</div>
+        <div class="news-desc">办事指南办事指南办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事指南办事指南办事指南办事指南</div>
+      </a>
+      <a class="news">
+        <div class="news-title">办事指南</div>
+        <div class="news-desc">办事指南办事指南办事指南办事指南办事指南办事指南办事指南</div>
+      </a>
+    </div>
+  </div>
+  <!-- 模板 -->
+  <script id="tpl-menu" type="text/html">
+
+  </script>
+  <script src="js/index.js"></script>
 </body>
 </html>
