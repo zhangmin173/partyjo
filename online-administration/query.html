@@ -19,20 +19,29 @@
   <div class="nav-hd">办件查询</div>
   <form class="form">
     <div class="form-item">
-      <label>办件号：</label>
-      <input type="text" name="name">
+      <label>流水号：</label>
+      <input id="j-flowSN" type="text" name="flowSN">
     </div>
-    <div class="form-item">
-      <label>办件密码：</label>
-      <input type="text" name="code">
-    </div>
-    <button class="form-btn" type="button">查询</button>
+    <div class="error"></div>
+    <button id="j-btn" class="form-btn" type="button">查询</button>
   </form>
   <div class="copyright">长兴县行政服务中心</div>
-  <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
 
+  <script>
+    $(function() {
+
+      $('#j-btn').on('click', function(event) {
+        var flowSN = $('#j-flowSN').val();
+        $.request('getProjectByFlowSN',{ flowSN: flowSN },function(res) {
+          if (res.ret == 1) {
+            window.location.href = 'affair_detail.html?id=' + res.data.ProjectGuid;
+          } else {
+            $('.error').text('错误信息：' + res.msg);
+          }
+        })
+      });
+
+    })
   </script>
-  <script src="js/index.js"></script>
 </body>
 </html>

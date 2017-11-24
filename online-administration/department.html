@@ -16,34 +16,35 @@
   <title></title>
 </head>
 <body>
-  <a class="dpt" href="">
-    <div class="dpt-left">
+  <div id="j-main">
 
-    </div>
-    <div class="dpt-mid">
-      <div class="name">鲜明总局</div>
-      <div class="intro">20 个事项</div>
-    </div>
-    <div class="dpt-right">
-
-    </div>
-  </a>
-  <a class="dpt" href="">
-    <div class="dpt-left">
-
-    </div>
-    <div class="dpt-mid">
-      <div class="name">鲜明总局</div>
-      <div class="intro">20 个事项</div>
-    </div>
-    <div class="dpt-right">
-
-    </div>
-  </a>
+  </div>
   <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
-
+  <script id="tpl-main" type="text/html">
+    {each OUList as d}
+      <a class="dpt" href="affair.html?id={d.OUInfo.OUGuid}">
+        <div class="dpt-left">
+          <i class="icon icon-md icon-danweitubiao"></i>
+        </div>
+        <div class="dpt-mid">
+          <div class="name">{d.OUInfo.OUName}</div>
+          <div class="intro">20 个事项</div>
+        </div>
+        <div class="dpt-right">
+          <i class="icon icon-sm icon-youjiantou"></i>
+        </div>
+      </a>
+    {/each}
   </script>
-  <script src="js/index.js"></script>
+  <script>
+    $(function() {
+
+      $.request('getTaskKindOU_YY',{},function(res) {
+        $.render('tpl-main',res.data,function(html) {
+          $('#j-main').append(html);
+        })
+      })
+    })
+  </script>
 </body>
 </html>

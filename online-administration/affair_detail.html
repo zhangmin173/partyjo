@@ -36,6 +36,16 @@
   <script id="tpl-menu" type="text/html">
 
   </script>
-  <script src="js/index.js"></script>
+  <script>
+    $(function() {
+      var id = $.getUrlPara('id');
+      $.request('getTaskDetail',{ taskGuid: id },function(res) {
+        $.render('tpl-main',res.data,function(html) {
+          $('#j-main').append(html);
+        })
+      })
+    })
+  </script>
+
 </body>
 </html>

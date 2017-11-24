@@ -25,32 +25,36 @@
   </div>
   <div class="a-list">
     <a class="user-list" href="index.html">
-      <i class="icon i-l"></i>
+      <i class="icon icon-sm icon-yuyuejilu i-l"></i>
       <span class="name">预约记录</span>
-      <i class="icon i-r"></i>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
     </a>
-    <a class="user-list" href="">
-      <i class="icon i-l"></i>
-      <span class="name">预约记录</span>
-      <i class="icon i-r"></i>
+    <a class="user-list" href="query_detail.html">
+      <i class="icon icon-sm icon-banshijilu i-l"></i>
+      <span class="name">办事记录</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
     </a>
+  </div>
+   <div class="login-out">
     <a class="user-list" href="">
-      <i class="icon i-l"></i>
-      <span class="name">预约记录</span>
-      <i class="icon i-r"></i>
+      <i class="icon icon-sm icon-dizhi i-l"></i>
+      <span class="name">我的收件地址</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
     </a>
   </div>
   <div class="login-out">
     <a class="user-list" href="">
-      <i class="icon i-l"></i>
+      <i class="icon icon-sm icon-tuichudenglu i-l"></i>
       <span class="name">退出登陆</span>
-      <i class="icon i-r"></i>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
     </a>
   </div>
-  <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
+  <script>
+    $(function() {
+      $.request('is_login',{ },function(res) {
 
+      })
+    })
   </script>
-  <script src="js/index.js"></script>
 </body>
 </html>

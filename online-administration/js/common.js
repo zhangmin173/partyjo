@@ -168,22 +168,35 @@ window._global = {
             }
             $.loading();
             paras = $.extend({
-                app_key: _global.app_key,
-                access_token: _global.access_token,
-                site_id: _global.site_info.id,
+                // app_key: _global.app_key,
+                // access_token: _global.access_token,
+                // site_id: _global.site_info.id,
                 }, data);
             $.log(paras,url + '请求参数');
             $.ajax({
                 type: methods,
-                url: url,
+                url: 'http://zhangmin.com/partyjo-web/api/' + url,
                 dataType: 'json',
                 data: paras
             }).done(function(res) {
                 $.loading();
                 $.log(res,url + '返回数据');
-                call && call(res);
+                if (res.ret == 999) {
+                    $.request('isOauth',{ url: window.location.href });
+                } else if (res.ret == 1001) {
+                    window.location.href = res.data;
+                } else if (res.ret == 1002) {
+                    if (confirm('现在去注册？')) {
+                        window.location.href = 'register.html';
+                    }
+                } else {
+                    call && call(res);
+                }
             }).fail(function() {
-                alert('请求失败');
+                $.pop('请求失败');
+                setTimeout(function() {
+                    $.loading();
+                },800);
                 $.log('请求失败',url + '接口错误');
             });
         },
@@ -225,7 +238,7 @@ window._global = {
                     d[this.name] = this.value || '';
                 }
             });
-            $.log(d,'ID '+id+' 表单数据');
+            $.log(d,id+' 表单数据');
             return d;
         },
         // 获取下拉框选中值
@@ -287,14 +300,22 @@ window._global = {
                 return phoneNum.substring(0, 3) + "****" + phoneNum.substring(7);
             }
         },
+        // 报错
+        pop: function(msg) {
+            var _html = '<div class="m-pop">'+msg+'</div>';
+            $('body').append(_html);
+            setTimeout(function() {
+                $('.m-pop').remove();
+            },2000);
+        },
         // 加载动画
         loading: function() {
-            var loading = '<div class="m-loading"><span></span><span></span><span></span></div>';
+            var _html = '<div class="m-loading"><span></span><span></span><span></span></div>';
 
             if ($('.m-loading').size()) {
                 $('.m-loading').remove();
             } else {
-                $('body').append(loading);
+                $('body').append(_html);
             }
         },
         // 回到顶部
