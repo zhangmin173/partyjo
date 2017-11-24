@@ -14,7 +14,6 @@ Index.prototype = {
     handle: function() {
         var _this = this;
 
-
     },
     owlInit: function() {
         if ($(".j-owl").find('a').size() > 1) {

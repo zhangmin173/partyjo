@@ -1,0 +1,31 @@
+@import url('components/_variable.less');
+
+body {
+	background-color: #fff;
+}
+.container {
+	padding: 60/@rem 30/@rem;
+}
+.at-wrap {
+	border-width: 2/@rem;
+	border-style: solid;
+	border-color: #ddd #ddd transparent;
+
+	.at-detail {
+		height: 95/@rem;
+		padding: 0 20/@rem;
+		line-height: 95/@rem;
+		font-size: 30/@rem;
+		border-bottom: 2/@rem dotted #ddd;
+
+		.name {
+			display: inline-block;
+			color: #000;
+		}
+
+		.info {
+			float: right;
+			text-align: right;
+		}
+	}
+}

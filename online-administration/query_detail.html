@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.js"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/query_detail.css">
+  <title></title>
+</head>
+<body>
+  <div class="nav-hd">办件查询</div>
+  <div class="container">
+    <div class="query">
+      <div class="query-hd"></div>
+      <div class="query-bd">
+        <div class="query-detail">
+          <span class="title">办件编号</span><span class="info"></span>
+        </div>
+        <div class="query-detail">
+          <span class="title">申报事项</span><span class="info">CX201712051125</span>
+        </div>
+        <div class="query-detail">
+          <span class="title">受理日期</span><span class="info">CX201712051125</span>
+        </div>
+        <div class="query-detail">
+          <span class="title">办理状态</span><span class="info">CX201712051125</span>
+        </div>
+        <div class="query-detail">
+          <span class="title">办理部门</span><span class="info">CX201712051125</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 模板 -->
+  <script id="tpl-menu" type="text/html">
+
+  </script>
+  <script src="js/index.js"></script>
+</body>
+</html>

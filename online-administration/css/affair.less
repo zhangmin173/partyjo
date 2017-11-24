@@ -1,0 +1,82 @@
+@import url('components/_variable.less');
+
+.container {
+	padding-top: 0;
+}
+.affair-title {
+	padding: 30/@rem 0;
+	font-size: 30/@rem;
+	color: #666;
+}
+
+.affair {
+	margin-bottom: 30/@rem;
+	background-color: #fff;
+	border: 2/@rem solid #ddd;
+
+	.affair-hd {
+		padding: 30/@rem 20/@rem;
+		font-size: 32/@rem;
+		color: #000;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border-bottom: 2/@rem solid #ddd;
+	}
+
+	.affair-bd {
+		padding: 30/@rem 20/@rem;
+	}
+
+	.affair-detail {
+		font-size: 26/@rem;
+		overflow: hidden;
+		margin-bottom: 30/@rem;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+		.name {
+			float: left;
+			color: #000;
+		}
+
+		.info {
+			float: left;
+			color: #666;
+			margin-right: 50/@rem;
+		}
+	}
+
+	.affair-btns {
+		width: 628/@rem;
+		height: 60/@rem;
+		font-size: 26/@rem;
+		border: 2/@rem solid @primary;
+		box-sizing: border-box;
+		border-radius: 10/@rem;
+
+		a {
+			float: left;
+			display: inline-block;
+			width: 50%;
+			height: 100%;
+			line-height: 60/@rem;
+			text-align: center;
+			text-decoration: none;
+
+			&.btn-l {
+				background-color: @primary;
+				color: #fff;
+				border-top-left-radius: 10/@rem;
+				border-bottom-left-radius: 10/@rem;
+			}
+
+			&.btn-r {
+				background-color: #fff;
+				color: @primary;
+				border-top-right-radius: 10/@rem;
+				border-bottom-right-radius: 10/@rem;
+			}
+		}
+	}
+}

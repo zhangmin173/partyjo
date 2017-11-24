@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.js"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/register.css">
+  <title></title>
+</head>
+<body>
+  <div class="nav-hd">用户注册</div>
+  <form class="form">
+    <div class="form-item">
+      <label>姓名：</label>
+      <input type="text" name="name">
+    </div>
+    <div class="form-item">
+      <label>身份证号：</label>
+      <input type="text" name="code">
+    </div>
+    <div class="form-item">
+      <label>手机号：</label>
+      <input type="text" name="mobile">
+    </div>
+    <button class="form-btn" type="button">注册</button>
+  </form>
+  <div class="copyright">长兴县行政服务中心</div>
+  <!-- 模板 -->
+  <script id="tpl-menu" type="text/html">
+
+  </script>
+  <script src="js/index.js"></script>
+</body>
+</html>
