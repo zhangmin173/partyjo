@@ -10,30 +10,29 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/affair_detail.css">
   <title></title>
 </head>
 <body>
   <div class="nav-hd">材料清单</div>
-  <div class="container">
-    <div class="aff">
-      <div class="aff-hd"></div>
-      <div class="aff-bd">
-        <div class="aff-detail">
-          <div class="name">1</div>
-          <div class="info">材料1</div>
-        </div>
-        <div class="aff-detail">
-          <div class="name">1</div>
-          <div class="info">材料1</div>
-        </div>
-      </div>
-    </div>
+  <div id="j-main" class="container">
+
   </div>
   <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
+  <script id="tpl-main" type="text/html">
+    <div class="aff">
+      <div class="aff-hd">{TaskName}</div>
+      <div class="aff-bd">
+         {each MatericalList as d i}
+          <div class="aff-detail">
+            <div class="name">{i+1}</div>
+            <div class="info">{d.MatericalInfo.MatericalName}</div>
+          </div>
+        {/each}
+      </div>
+    </div>
 
   </script>
   <script>

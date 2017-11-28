@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
   <!-- 插件资源 -->
   <link rel="stylesheet" href="lib/owlcarousel/owl.carousel.min.css">
   <script src="lib/owlcarousel/owl.carousel.min.js"></script>
@@ -20,86 +20,57 @@
 </head>
 <body>
   <div class="banner j-owl">
-    <a class="" href=""><img src="img/banner_1.jpg"></a>
-    <a class="" href=""><img src="img/banner_1.jpg"></a>
-    <a class="" href=""><img src="img/banner_1.jpg"></a>
+
   </div>
   <div class="menu-wrap">
-    <a class="menu" href="department.html">
-      <div class="menu-icon" style="background-image: url(img/icon/banshizhinan.png);"></div>
-      <div class="menu-name">办事指南</div>
-    </a>
-    <a class="menu" href="query.html">
-      <div class="menu-icon" style="background-image: url(img/icon/banshichaxun.png);"></div>
-      <div class="menu-name">办件查询</div>
-    </a>
-    <a class="menu" href="">
-      <div class="menu-icon" style="background-image: url(img/icon/wangshangzixun.png);"></div>
-      <div class="menu-name">网上咨询</div>
-    </a>
-    <a class="menu" href="user_center.html">
-      <div class="menu-icon" style="background-image: url(img/icon/gerenzhongxing.png);"></div>
-      <div class="menu-name">个人中心</div>
-    </a>
+
   </div>
   <div class="block-wrap">
     <div class="block-wrap-title">
       热点应用
       <a class="more" href="https://app.zjzwfw.gov.cn/wechat/wechat/phone/showMoreService.do?zjolTitleName=%E4%BE%BF%E6%B0%91%E6%9C%8D%E5%8A%A1">更多</a>
     </div>
-    <a class="block br" href="http://weixin.zjt.gov.cn/weixin/getpage?type=zjt&id=4">
-      <div class="block-icon" style="background-image: url(img/icon/1gaosulukuang.png);"></div>
-      <div class="block-name">高速路况</div>
-    </a>
-    <a class="block br" href="http://unibase.zjzwfw.gov.cn/download/">
-      <div class="block-icon" style="background-image: url(img/icon/2gonggongzhifu.png);"></div>
-      <div class="block-name">公共支付</div>
-    </a>
-    <a class="block br" href="http://unibase.zjzwfw.gov.cn/download/">
-      <div class="block-icon" style="background-image: url(img/icon/3gongjijinchaxun.png);"></div>
-      <div class="block-name">公积金查询</div>
-    </a>
-    <a class="block" href="http://zjjsyjfcx.yyhj.zjzwfw.gov.cn/wap/drvQuery.do">
-      <div class="block-icon" style="background-image: url(img/icon/4jiashiyuanjifen.png);"></div>
-      <div class="block-name">驾驶员计分</div>
-    </a>
-    <a class="block br" href="http://zjjhdj.yyhj.zjzwfw.gov.cn/">
-      <div class="block-icon" style="background-image: url(img/icon/5jiehundengji.png);"></div>
-      <div class="block-name">结婚登记</div>
-    </a>
-     <a class="block br" href="http://unibase.zjzwfw.gov.cn/download/">
-      <div class="block-icon" style="background-image: url(img/icon/6shebaochaxun.png);"></div>
-      <div class="block-name">社保查询</div>
-    </a>
-     <a class="block br" href="http://zjtqyb.yyhj.zjzwfw.gov.cn/">
-      <div class="block-icon" style="background-image: url(img/icon/7tianqichaxun.png);"></div>
-      <div class="block-name">天气查询</div>
-    </a>
-     <a class="block" href="http://zjxsrcm.yyhj.zjzwfw.gov.cn/">
-      <div class="block-icon" style="background-image: url(img/icon/8xinshengerchaxun.png);"></div>
-      <div class="block-name">新生儿重名</div>
-    </a>
+
   </div>
   <div class="news-wrap">
     <div class="news-wrap-title">
       新闻资讯
-      <a class="more" href="" title="">更多</a>
+      <!-- <a class="more" href="" title="">更多</a> -->
     </div>
-    <div>
-      <a class="news">
-        <div class="news-title">办事指南办事指南办事指南办事指南办事指南办事指南办事指南</div>
-        <div class="news-desc">办事指南办事指南办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事办事指南办事指南办事指南办事指南办事指南</div>
-      </a>
-      <a class="news">
-        <div class="news-title">办事指南</div>
-        <div class="news-desc">办事指南办事指南办事指南办事指南办事指南办事指南办事指南</div>
-      </a>
+    <div class="j-news-wrap">
+
     </div>
   </div>
   <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
-
+  <script id="tpl-banner" type="text/html">
+    {each data as d}
+      <a class="" href="{d.linkurl}"><img src="{d.imgurl}"></a>
+    {/each}
   </script>
-  <script src="js/index.js"></script>
+  <script id="tpl-cate" type="text/html">
+    {each data as d}
+    <a class="menu" href="{d.linkurl}">
+      <div class="menu-icon" style="background-image: url('{d.imgurl}');"></div>
+      <div class="menu-name">{d.title}</div>
+    </a>
+    {/each}
+  </script>
+  <script id="tpl-app" type="text/html">
+    {each data as d}
+    <a class="block br" href="{d.linkurl}">
+      <div class="block-icon" style="background-image: url('{d.imgurl}');"></div>
+      <div class="block-name">{d.title}</div>
+    </a>
+    {/each}
+  </script>
+  <script id="tpl-news" type="text/html">
+    {each data as d}
+    <a class="news" href="{d.linkurl}">
+      <div class="news-title">{d.title}</div>
+      <div class="news-desc">{d.summary}</div>
+    </a>
+    {/each}
+  </script>
+  <script src="js/index.min.js"></script>
 </body>
 </html>

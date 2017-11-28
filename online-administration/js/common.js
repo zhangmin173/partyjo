@@ -4,6 +4,10 @@ if (typeof jQuery == "undefined") {
 window.debug = true,
 window._global = {
 	browser: null,
+    url: {
+        //api: 'http://wechat.nextdog.cc/partyjo-web/api/'
+        api: 'http://zhangmin.com/partyjo-web/api/'
+    }
 };
 
 +function($) {
@@ -34,12 +38,20 @@ window._global = {
             	system: $.browser.system()
             }
             this.log(_global,'全局参数');
+            this.h5show();
         },
         // 模板引擎初始化
         templateConfig: function() {
         	template.config('escape', false);
             template.config('openTag', '{');
             template.config('closeTag', '}');
+        },
+        // 全局菜单
+        h5show: function() {
+            $(function() {
+                var _html = '<a class="home-menu" href="index.html"><img src="./img/icon/home.png"></a>';
+                $('body').append(_html);
+            })
         },
         // 浏览器判断
         browser: {
@@ -175,7 +187,7 @@ window._global = {
             $.log(paras,url + '请求参数');
             $.ajax({
                 type: methods,
-                url: 'http://zhangmin.com/partyjo-web/api/' + url,
+                url: _global.url.api + url,
                 dataType: 'json',
                 data: paras
             }).done(function(res) {

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/register.css">
   <title></title>
@@ -19,15 +19,15 @@
   <div class="nav-hd">用户注册</div>
   <form class="form">
     <div class="form-item">
-      <label>姓名：</label>
+      <label>*姓名：</label>
       <input type="text" name="name">
     </div>
     <div class="form-item">
-      <label>身份证号：</label>
+      <label>*身份证号：</label>
       <input type="text" name="code">
     </div>
     <div class="form-item">
-      <label>手机号：</label>
+      <label>*手机号：</label>
       <input type="text" name="mobile">
     </div>
     <div class="error"></div>
@@ -40,7 +40,10 @@
       $('#j-btn').on('click', function(event) {
         var data = $.form2Json('.form');
         $.request('register',data,function(res) {
-          $.pop(res.msg);
+          $('.error').html(res.msg);
+          if (res.ret == 1) {
+            window.location.href = 'user_center.html';
+          }
         })
       });
 

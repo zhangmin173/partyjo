@@ -10,33 +10,128 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/affair_appoint.css">
   <title></title>
 </head>
 <body>
   <div class="nav-hd">网上预约</div>
-  <ul class="date">
-    <li class="active">11月27日</li>
-    <li>11月27日</li>
-    <li>11月27日</li>
-    <li>11月27日</li>
-    <li>11月27日</li>
-  </ul>
+  <ul id="j-main" class="date"></ul>
   <div class="main">
-    <div class="title">长兴县</div>
-    <div class="address-detail">长兴县</div>
+    <div id="j-wrap-0" class="time-wrap">无数据</div>
+    <div id="j-wrap-1" class="time-wrap" style="display: none;">无数据</div>
+    <div id="j-wrap-2" class="time-wrap" style="display: none;">无数据</div>
+    <div id="j-wrap-3" class="time-wrap" style="display: none;">无数据</div>
+    <div id="j-wrap-4" class="time-wrap" style="display: none;">无数据</div>
+  </div>
+  <div class="main">
+    <div class="title">长兴县行政服务大厅</div>
+    <div class="address-detail">长兴县XX路XX号</div>
+
   </div>
   <div class="main mh">
-    <div class="title">长兴县</div>
-    <div class="content">长兴县</div>
+    <div class="title">注意事项</div>
+    <div class="content">1. xxxxxxx<br>2. xxxxx</div>
   </div>
   <button class="btn appoint-btn" type="button">同意并预约</button>
   <!-- 模板 -->
-  <script id="tpl-menu" type="text/html">
-
+  <script id="tpl-main" type="text/html">
+    {each YuYueDateList as d i}
+    <li class="{if i == 0}active loaded{/if}" data-date="{d.YuYueDateInfo.Date}">{d.YuYueDateInfo.Date.substring(5,10)}</li>
+    {/each}
   </script>
-  <script src="js/index.js"></script>
+  <script id="tpl-time" type="text/html">
+    {each YuYueTimeList as d i}
+      <div class="time-picker {if i == 0}active{/if}" data-stime="{d.YuYueTimeInfo.YuYueTimeStart}" data-etime="{d.YuYueTimeInfo.YuYueTimeEnd}">
+        <span class="time">{d.YuYueTimeInfo.YuYueTimeStart + '-' + d.YuYueTimeInfo.YuYueTimeEnd}</span>
+        <span class="num">余号：{d.YuYueTimeInfo.YuYueSum - d.YuYueTimeInfo.YiYuYueSum}</span>
+      </div>
+    {/each}
+  </script>
+  <script>
+    $(function() {
+
+      var id = $.getUrlPara('id'),
+        dateIndex = 0;
+
+      $.request('getYuYueDateList',{ showDays: 5 },function(res) {
+        if (res.ret == 1) {
+          $.render('tpl-main',res.data,function(html) {
+            $('#j-main').append(html);
+            getTime(id,res.data.YuYueDateList[0].YuYueDateInfo.Date,function(d) {
+              $.render('tpl-time',d,function(_html) {
+                $('#j-wrap-0').html(_html);
+              })
+            })
+          })
+        }
+      })
+
+      $('.time-wrap').on('click','.time-picker',function() {
+        $(this).addClass('active').siblings().removeClass('active');
+      })
+
+      $('#j-main').on('click','li',function() {
+        var $this = $(this),
+          index = $this.index(),
+          date = $this.data('date');
+
+        dateIndex = index;
+        $this.addClass('active');
+        $this.siblings().removeClass('active');
+        if ($this.hasClass('loaded')) {
+          showTimeWrap(index);
+        } else {
+          getTime(id,date,function(d) {
+            $this.addClass('loaded');
+            $.render('tpl-time',d,function(_html) {
+              $('#j-wrap-' + index).html(_html);
+            })
+            showTimeWrap(index);
+          })
+        }
+      })
+
+      $('.appoint-btn').on('click',function() {
+        var date = $('#j-main .active').data('date'),
+          st = '',
+          et = '';
+
+        if ($('#j-wrap-' + dateIndex).find('.active').size() <= 0) {
+          alert('请选择预约时间段');
+        } else {
+          st = $('#j-wrap-' + dateIndex + ' .active').data('stime'),
+          et = $('#j-wrap-' + dateIndex + ' .active').data('etime');
+          var d = { taskGuid: id, date: date, st: st,et: et };
+          addNo(d);
+        }
+      })
+
+      function addNo(data,call) {
+        $.request('getYuYueQNO',data,function(res) {
+          if (res.ret == 1) {
+            $.pop(res.msg);
+            window.location.href = 'affair_appoint_detail.html?id=' + id;
+          } else {
+            alert(res.msg);
+          }
+        })
+      }
+
+      function getTime(taskGuid,date,call) {
+        $.request('getYuYueTimeList',{ taskGuid: taskGuid, yuYueDate: date },function(res) {
+          if (res.ret == 1) {
+            call && call(res.data);
+          }
+        })
+      }
+
+      function showTimeWrap(index) {
+        $('.time-wrap').hide();
+        $('#j-wrap-' + index).show();
+      }
+    })
+  </script>
 </body>
 </html>

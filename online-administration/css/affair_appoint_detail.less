@@ -12,19 +12,23 @@ body {
 	border-color: #ddd #ddd transparent;
 
 	.at-detail {
-		height: 95/@rem;
+		// height: 95/@rem;
 		padding: 0 20/@rem;
 		line-height: 95/@rem;
 		font-size: 30/@rem;
 		border-bottom: 2/@rem dotted #ddd;
+		overflow: hidden;
 
 		.name {
+			float: left;
 			display: inline-block;
 			color: #000;
 		}
 
 		.info {
 			float: right;
+			display: inline-block;
+			max-width: 500/@rem;
 			text-align: right;
 		}
 	}

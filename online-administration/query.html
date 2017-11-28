@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/query.css">
   <title></title>
@@ -20,7 +20,7 @@
   <form class="form">
     <div class="form-item">
       <label>流水号：</label>
-      <input id="j-flowSN" type="text" name="flowSN">
+      <input id="j-flowSN" type="number" name="flowSN">
     </div>
     <div class="error"></div>
     <button id="j-btn" class="form-btn" type="button">查询</button>
@@ -34,7 +34,7 @@
         var flowSN = $('#j-flowSN').val();
         $.request('getProjectByFlowSN',{ flowSN: flowSN },function(res) {
           if (res.ret == 1) {
-            window.location.href = 'affair_detail.html?id=' + res.data.ProjectGuid;
+            window.location.href = 'query_detail.html?id=' + res.data.ProjectGuid;
           } else {
             $('.error').text('错误信息：' + res.msg);
           }

@@ -31,7 +31,7 @@ gulp.task('less', function() {
 
 // 压缩js
 gulp.task('js', function() {
-    return gulp.src([game + '/js/*.js','!' + game + '/js/*.min.js'])
+    return gulp.src([game + '/js/**/*.js','!' + game + '/js/**/*.min.js'])
         .pipe(plumber())
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))

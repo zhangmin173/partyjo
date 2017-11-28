@@ -10,13 +10,15 @@
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
-  <script src="js/common.js"></script>
+  <script src="js/common.min.js"></script>
+  <!-- 插件资源 -->
+  <script src="js/lib/mobileLoad.min.js"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/affair.css">
   <title></title>
 </head>
 <body>
-  <div class="nav-hd">事项列表</div>
+  <div class="nav-hd ft">事项列表</div>
   <div id="j-main" class="container">
 
   </div>
@@ -25,26 +27,28 @@
     {each TaskList as d}
     <div class="affair">
       <div class="affair-hd">
-        宗教场所宗教场所宗教场所宗教场所宗教场所
+        {d.TaskInfo.TaskName}
       </div>
       <div class="affair-bd">
         <div class="affair-detail">
           <span class="name">受理机构：</span>
-          <span class="info">事务局</span>
+          <span class="info">{d.TaskInfo.OUNAME}</span>
+        </div>
+        <div class="affair-detail">
           <span class="name">承诺期限：</span>
-          <span class="info">10 工作日</span>
+          <span class="info">{d.TaskInfo.PROMISE_DAY} 工作日</span>
         </div>
         <div class="affair-detail">
           <span class="name">联系电话：</span>
-          <span class="info">事务局</span>
+          <span class="info">{d.TaskInfo.LINK_TEL}</span>
         </div>
         <div class="affair-detail">
           <span class="name">办公地址：</span>
-          <span class="info">事务局</span>
+          <span class="info">{d.TaskInfo.ApplyAddress}</span>
         </div>
         <div class="affair-btns">
-          <a class="btn-l" href="affair_detail.html?id={}">材料清单</a>
-          <a class="btn-r" href="affair_appoint.html">网上预约</a>
+          <a class="btn-l" href="affair_detail.html?id={d.TaskInfo.TaskGuid}">材料清单</a>
+          <a class="btn-r" href="affair_appoint.html?id={d.TaskInfo.TaskGuid}">网上预约</a>
         </div>
       </div>
     </div>
@@ -53,13 +57,58 @@
   <script>
     $(function() {
       var id = $.getUrlPara('id');
-      $.request('getTaskList_YY',{ oUGuid: id },function(res) {
-        if (res.ret == 1) {
-          $.render('tpl-main',res.data,function(html) {
-            $('#j-main').append(html);
-          })
-        }
-      })
+
+      var opts = {
+        box: '#j-main',
+        model: 'tpl-main',
+        isOver: false,
+        isLoading: false,
+        isOneShow: true,
+        initNoData: '',
+        noData: '',
+        errorData: '',
+        pageIndex: 1,
+        pageSize: 10
+      };
+
+      doLoad();
+
+      $(window).scroll(function () {
+          var totalheight = Math.ceil($(window).height()) + Math.ceil($(window).scrollTop());
+          if ($(document).height() <= totalheight) {
+              if (opts.isOver == false && opts.isLoading == false) {
+                doLoad();
+              } else if (opts.isOver) {
+                console.log('没有更多数据了');
+              }
+          }
+      });
+
+      function doLoad() {
+        loadData(function(res) {
+          if (res.ret == 1) {
+            opts.total = res.data.TotalCount;
+            if (opts.total < opts.pageIndex*opts.pageSize) {
+              opts.isOver = true;
+            }
+            opts.pageIndex ++;
+            $.render(opts.model,res.data,function(html) {
+              $(opts.box).append(html);
+              opts.isLoading = false;
+              opts.isOneShow = false;
+            })
+          } else {
+            console.log(res.msg);
+          }
+        })
+      }
+
+      function loadData(call) {
+        opts.isLoading = true;
+        $.request('getTaskList_YY',{ oUGuid: id,pageIndex: opts.pageIndex, pageSize: opts.pageSize },function(res) {
+          call && call(res);
+        })
+      }
     })
   </script>
 </body>
