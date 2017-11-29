@@ -5,8 +5,8 @@ window.debug = true,
 window._global = {
 	browser: null,
     url: {
-        //api: 'http://wechat.nextdog.cc/partyjo-web/api/'
-        api: 'http://zhangmin.com/partyjo-web/api/'
+        api: '//wechat.nextdog.cc/partyjo-web/api/'
+        //api: 'http://zhangmin.com/partyjo-web/api/'
     }
 };
 
@@ -194,7 +194,7 @@ window._global = {
                 $.loading();
                 $.log(res,url + '返回数据');
                 if (res.ret == 999) {
-                    $.request('isOauth',{ url: window.location.href });
+                    $.request('is_oauth',{ url: window.location.href });
                 } else if (res.ret == 1001) {
                     window.location.href = res.data;
                 } else if (res.ret == 1002) {
