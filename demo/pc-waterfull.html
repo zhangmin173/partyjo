@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pc-waterfull</title>
+	<script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+	<style>
+		.wrap {
+			position: relative;
+			width: 400px;
+			height: auto;
+			background-color: #f2f2f2;
+			margin: 20px auto;
+			overflow: hidden;
+		}
+		.wrap .wrap-item {
+			position: absolute;
+			height: 0;
+			padding-bottom: -100%;
+			float: left;
+			background-position: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+
+	</div>
+	<script>
+		function Index() {
+		    if (!(this instanceof Index)) {
+		        return new Index();
+		    }
+		    this.init();
+		}
+		Index.prototype = {
+			$wrap: null,
+			wrapW: 0,
+			width: 0,
+			colNum: 4,
+			imgObjArr: null,
+			heightArr: [],
+	    init: function () {
+	        var _this = this;
+
+	        _this.$wrap = $('.wrap');
+	        _this.wrapW = _this.$wrap.width();
+	        _this.width = _this.wrapW/_this.colNum;
+	        _this.heightArr[0] = {
+	        	w: 0,
+	        	h:0
+	        };
+	        console.log(_this.heightArr);
+
+	        _this.loadImg(function(data) {
+	        	_this.loadImage(data,function(res){
+	        		for (let i = 0,len = res.length; i < len; i++) {
+	        			var v = res[i].width/res[i].height;
+	        			console.log(v);
+	        			if (1.1 > v > 0.9) {
+	        				res[i].type = 'square';
+	        			} else if(v > .5) {
+	        				res[i].type = 'erect';
+	        			} else {
+	        				res[i].type = 'side';
+	        			}
+			      	}
+			      	_this.renderItem(res);
+	        	})
+	        });
+	    },
+	    // 渲染
+	    renderItem: function(imgArr) {
+	    	var _this = this;
+
+	    	for (let i = 0,len = imgArr.length; i < len; i++) {
+      		var $dom = $('<div class="wrap-item"></div>'),
+      			w = _this.width,
+      			h = _this.width,
+      			l = 0,
+      			t = 0;
+
+      			$dom.css({
+      				backgroundImage: 'url('+$(imgArr[i]).attr('src')+')',
+      			});
+      		if (imgArr[i].type == 'square') {
+      			$dom.css({
+      				backgroundSize: '100%'
+      			});
+      		} else if (imgArr[i].type == 'erect') {
+      			h *= 2;
+      			$dom.css({
+      				backgroundSize: 'auto 100%'
+      			});
+      		} else {
+      			w *= 2;
+      			$dom.css({
+      				backgroundSize: '100%'
+      			});
+      		}
+      		var arr = _this.heightArr;
+      		for (let i = 0,len = arr.length; i < len; i++) {
+      			if ((_this.wrapW - arr[i].w) >= w) {
+      				l = arr[i].w;
+      				t = arr[i].h;
+      			}
+      		}
+      		$dom.css({
+    				width: w,
+    				height: h,
+    				left: l,
+    				top: t
+    			});
+      		_this.$wrap.append($dom);
+      	}
+	    },
+	    // 请求图片
+	    loadImg: function(call) {
+	    	$.getJSON('mock/ajaxImg.json',function(res) {
+	    		call && call(res.data);
+	    	})
+	    },
+	    // 图片预加载，目的是为了获取图片的宽和高，一般此项在后端完成，数据一并返回
+	    loadImage: function(imgArr, call) {
+	      var _this = this;
+
+	      var elNum = imgArr.length,
+	      	num = 0,
+	      	elObjArr = [];
+
+	      for (let i = 0,len = imgArr.length; i < len; i++) {
+      		var Obj = new Image();
+	        Obj.src = imgArr[i].url;
+	        Obj.onload = function() {
+	          elObjArr.push(this);
+	          num++;
+	          if(num >= elNum) {
+	            call && call(elObjArr);
+	          }
+	        }
+      	}
+	    }
+		};
+		$(function() {
+		    new Index();
+
+		    Array.max = function( array ){
+					return Math.max.apply( Math, array );
+				};
+				Array.min = function( array ){
+					return Math.min.apply( Math, array );
+				};
+		})
+	</script>
+</body>
+</html>
