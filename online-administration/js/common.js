@@ -198,9 +198,15 @@ window._global = {
                 } else if (res.ret == 1001) {
                     window.location.href = res.data;
                 } else if (res.ret == 1002) {
-                    if (confirm('现在去注册？')) {
-                        window.location.href = 'register.html';
+                    var path = window.location.href;
+                    if (path.indexOf('register')>=0) {
+
+                    } else {
+                        if (confirm('现在去注册？')) {
+                            window.location.href = 'register.html';
+                        }
                     }
+
                 } else {
                     call && call(res);
                 }

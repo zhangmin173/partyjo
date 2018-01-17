@@ -11,41 +11,95 @@
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
   <script src="lib/template/template.min.js"></script>
   <script src="js/common.min.js"></script>
+  <script charset="utf-8" type="text/javascript" src="https://puser.zjzwfw.gov.cn/sso/js.do?servicecode=cxwxgz"></script>
   <!-- 页面资源 -->
   <link rel="stylesheet" href="css/register.css">
   <title></title>
 </head>
 <body>
-  <div class="nav-hd">用户注册</div>
-  <form class="form">
+  <img class="login-hd" src="img/login_hd.png">
+  <div id="j-chageLoginType" class="login-change">
+    <a class="active" href="javascript:;">个人登陆</a>
+    <a href="javascript:;">法人登陆</a>
+  </div>
+  <div class="line"></div>
+  <form class="form login-form">
     <div class="form-item">
-      <label>*姓名：</label>
-      <input type="text" name="name">
+      <label>账号：</label>
+      <input id="loginname" type="text" name="mobile">
     </div>
     <div class="form-item">
-      <label>*身份证号：</label>
-      <input type="text" name="code">
-    </div>
-    <div class="form-item">
-      <label>*手机号：</label>
-      <input type="text" name="mobile">
+      <label>密码：</label>
+      <input id="loginpwd" type="text" name="pwd">
     </div>
     <div class="error"></div>
-    <button id="j-btn" class="form-btn" type="button">注册</button>
+    <div class="btn-groups">
+      <button id="j-btn" class="form-btn" type="button">登陆</button>
+      <a class="l" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">我要注册</a>
+      <a class="r" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">忘记密码</a>
+    </div>
   </form>
   <div class="copyright">长兴县行政服务中心</div>
   <script>
+    var loginType = 1;
+
     $(function() {
 
-      $('#j-btn').on('click', function(event) {
-        var data = $.form2Json('.form');
-        $.request('register',data,function(res) {
-          $('.error').html(res.msg);
+      $.request('is_oauth',{ url: window.location.href });
+
+      YH.method.autoLoginForJs();//自动登录
+      function login(){
+        var loginname = document.getElementById("loginname").value;
+        var loginpwd = document.getElementById("loginpwd").value;
+        YH.method.loginForJs(loginname, loginpwd,"001003076");
+      }
+      //登录成功
+      YH.callback.loginAppForJs = function(ticket){
+        $.request('login',{ ticket: ticket },function(res) {
           if (res.ret == 1) {
             window.location.href = 'user_center.html';
+          } else {
+            $('.error').html(res.msg);
           }
         })
+      }
+
+      //登录失败
+      YH.callback.showErrcode = function(errorMsg, errorcode){
+        $('.error').html(errorMsg);
+      }
+
+      $('#j-btn').on('click', function(event) {
+        if (loginType) {
+          login();
+        } else {
+          login2();
+        }
       });
+
+      // 法人登陆
+      function login2() {
+        console.log('login2');
+        var loginname = document.getElementById("loginname").value;
+        var loginpwd = document.getElementById("loginpwd").value;
+        $.request('login2',{ loginname: loginname, loginpwd: loginpwd },function(res) {
+          if (res.ret == 1) {
+            window.location.href = 'user_center.html';
+          } else {
+            $('.error').html(res.msg);
+          }
+        })
+      }
+
+      $('#j-chageLoginType').on('click','a',function() {
+        $('#j-chageLoginType').find('a').removeClass('active');
+        $(this).addClass('active');
+        if($(this).index() == 0) {
+          loginType = 1;
+        } else {
+          loginType = 0;
+        }
+      })
 
     })
   </script>
