@@ -60,7 +60,8 @@
       var id = $.getUrlPara('id'),
         dateIndex = 0;
 
-      var User
+      var User;
+
       $.isRegister(function(r) {
         User = r.data
         $.request('getYuYueDateList',{ showDays: 5 },function(res) {
@@ -108,7 +109,9 @@
           et = '';
 
         if ($('#j-wrap-' + dateIndex).find('.active').size() <= 0) {
-          alert('请选择预约时间段');
+          // $.pop('请选择预约时间段');
+          var d = { taskGuid: id, date: date, st: '08:30',et: '17.30' };
+          addNo(d);
         } else {
           st = $('#j-wrap-' + dateIndex + ' .active').data('stime'),
           et = $('#j-wrap-' + dateIndex + ' .active').data('etime');
@@ -118,12 +121,19 @@
       })
 
       function addNo(data,call) {
-        $.request('getYuYueQNO',data,function(res) {
+        var params = $.extend({}, {
+          username: User.username,
+          idnum: User.idnum,
+          mobile: User.mobile,
+          token: User.token
+        }, data)
+        $.request('getYuYueQNO',params,function(res) {
+          $.pop(res.msg);
           if (res.ret == 1) {
-            $.pop(res.msg);
-            window.location.href = 'affair_appoint_detail.html?id=' + id;
-          } else {
-            alert(res.msg);
+            // ---
+            alert('预约成功，请携带有效证件前往')
+            // ---
+            // window.location.href = 'affair_appoint_detail.html?id=' + id;
           }
         })
       }

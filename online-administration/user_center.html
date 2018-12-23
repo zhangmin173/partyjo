@@ -51,12 +51,10 @@
   </div> -->
   <script>
     $(function() {
-      $.request('is_oauth',{ url: window.location.href },function(res) {
-        if (res.ret == 1) {
-          $('.headimg').css('background-image','url('+res.data.headimgurl+')');
-          $('.j-name').text(res.data.name);
-          $('.j-number').text(res.data.mobile);
-        }
+      $.isRegister(function(res) {
+        $('.headimg').css('background-image','url('+res.data.headimgurl+')');
+        $('.j-name').text(res.data.username);
+        $('.j-number').text(res.data.mobile);
       })
     })
   </script>

@@ -75,7 +75,13 @@
         pageSize: 10
       };
 
-      doLoad();
+      var User;
+      $.isRegister(function(res) {
+        User = res.data;
+        doLoad();
+      })
+
+      
 
       $(window).scroll(function () {
           var totalheight = Math.ceil($(window).height()) + Math.ceil($(window).scrollTop());
@@ -111,7 +117,7 @@
         opts.isLoading = true;
         $.request('getAppointmentList',{ pageIndex: opts.pageIndex, pageSize: opts.pageSize },function(res) {
           call && call(res);
-        })
+        }, 'get', User)
       }
 
     })
