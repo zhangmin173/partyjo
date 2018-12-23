@@ -1,0 +1,38 @@
+ /** 
+  * 作者： 孙尊路
+  * 创建时间：2017/06/16 14:47:28
+  * 版本： [1.0, 2017/6/16]
+  * 版权： 江苏国泰新点软件有限公司
+  * 描述：  增强用户体验，暂无数据、暂无网络都应给出提示，达到界面友好。
+ **/
+ /*提示容器*/
+ .em-tips {
+ 	display: none;
+ 	width: 100px;
+ 	height: 100px;
+ 	position: absolute;
+ 	top: 100px;
+ 	bottom: 0;
+ 	left: 0;
+ 	right: 0;
+ 	margin: auto;
+ 	text-align: center;
+ }
+ /*提示图标样式*/
+ .em-tips img {
+ 	display: block;
+ 	width: 90px;
+ 	height: 90px;
+ 	position: relative;
+ 	top: 0px;
+ 	bottom: 0;
+ 	left: 0;
+ 	right: 0;
+ 	margin: auto;
+ 	text-align: center;
+ }
+  /*提示文字样式*/
+  .em-tips p{
+  	color: #97B3DE;
+  	font-size: 13px;
+  }

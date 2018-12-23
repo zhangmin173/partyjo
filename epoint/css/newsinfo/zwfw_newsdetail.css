@@ -1,0 +1,79 @@
+/**
+ * 作者: 
+ * 创建时间:2017/6/013 10:11:35
+ * 版本:[1.0, 2017/6/13]
+ * 版权:江苏国泰新点软件有限公司
+ * 描述:中心新闻 详情
+ */
+
+
+/* main */
+
+body {
+	background-color: #fff;
+}
+
+.img {
+	width: 100%;
+	vertical-align: middle;
+	margin: 0px auto;
+	display: block;
+}
+
+.mui-content {
+	margin-top: 14px;
+	padding: 0px 10px;
+}
+
+.details-hd {
+	padding-top: 0px;
+	height: auto;
+	border-bottom: 1px dashed #c2c2c2;
+	min-height: 65px;
+}
+
+.details-hd h1 {
+	display: block;
+	margin: 0;
+	line-height: 16px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+}
+
+.publishing-unit {
+	margin-top: 12px;
+	height: 12px;
+	font-size: 12px;
+	color: #adadad;
+}
+
+.publishing-unit span {
+	line-height: 12px;
+}
+
+.unit-name {
+	float: left;
+}
+
+.publishing-time {
+	float: right;
+}
+
+.details-bd {
+	display: block;
+	padding: 14px 0px 16px 0px;
+	line-height: 16px;
+	font-size: 14px;
+	color: #666;
+}
+
+.content {
+	line-height: 18px;
+	font-size: 14px;
+	color: #666;
+}
+
+.ending {
+	margin-top: 18px;
+}

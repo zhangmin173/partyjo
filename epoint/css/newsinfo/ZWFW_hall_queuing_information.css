@@ -1,0 +1,152 @@
+/** 
+ * 作者： 李鹏
+ * 创建时间：2017/06/16 14:47:28
+ * 版本： [1.0, 2017/6/16]
+ * 版权： 江苏国泰新点软件有限公司
+ * 描述： 大厅排队信息
+**/
+.em-search-wrapper{
+	overflow: hidden;
+	padding: 8px 0px 8px 10px;
+	background-color: #fff;
+}
+.em-search-left-item{
+	float: left;
+	width: 80%;
+}
+.em-search-right-item{
+	float: left;
+	width: 20%;
+	display: flex;
+	justify-content: center;
+}
+.em-search-icon{
+	position: absolute;
+	left: 15px;
+	width: 23px;
+	height: 19px;
+	top: 15px;
+}
+input[type="search"]{
+	background-color: #F0F0F0;
+	margin-bottom: 0px !important;
+	padding-left: 34px;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */ 
+	font-size:14px;
+	text-align: left;
+} 
+.em-column-wrapper{
+	padding: 10px 10px;
+	height: 82px;
+	display: flex;
+	background-color: #fff;
+	border-top: 1px solid #E4E4E4;
+}
+.em-column-left-item{
+	background-color: #E8F3FF;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-left: 3px solid #A2D0FF;
+}
+.em-column-right-item{
+	background-color: #EEFAF8;
+	margin-left: 2%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-left: 3px solid #BAE9E2;
+}
+.em-column-wrapper>div{
+	width: 49%;
+}
+.em-column-img{
+	width: 50px;
+	margin-left: 8px;
+}
+.em-column-content{
+	margin-left: 10px;
+}
+#em-pickup-text{
+	color: #3c80e6;
+	font-size: 18px;
+}
+#em-appeal-text{
+	font-size: 18px;
+	color: #2bb079;
+}
+.em-default-text{
+	color: #9ca6bd;
+	font-size: 12px;
+}
+.em-wait-personNum{
+	height: 44px;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 10px;
+	background-color: #fff;
+	/*border-bottom: 1px solid #E4E4E4;*/
+	margin-top: 12px;
+}
+.em-wait-column-left{
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	color: #333333;
+}
+.em-wait-column-right{
+	display: flex;
+	align-items: center;
+	color: #888888;
+	font-size: 14px;
+}
+.em-wait-column-left img{
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
+}
+#em-wait-total{
+	color: #e6443c;
+	font-size: 18px;
+}
+.mui-table-view-cell{
+	display: flex;
+	justify-content: space-between;
+	padding: 11px 10px;
+}
+.mui-table-view-cell p span{
+	padding-top: 8px;
+}
+.em-hall{
+	font-size: 16px;
+	color: #333333;
+}
+.em-hall span{
+	color: #888888;
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+}
+a{
+	color: #3C80E6;
+	font-size: 13px;
+}
+.em-wait-num{
+	color: #888888;
+	font-size: 13px;
+}
+.em-wait-num span{
+	display: flex;
+	align-items: center;
+}
+.em-wait-people-num{
+	color: #e6443c;
+	font-size: 13px;
+}
+.em-window-icon,.em-people-icon{
+	width: 15px;
+	height: 15px;
+	margin-right: 8px;
+}
+

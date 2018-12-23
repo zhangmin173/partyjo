@@ -1,0 +1,24 @@
+/**
+ * 材料列表
+ */
+
+.mui-navigate-right:after {
+	right: 10px;
+	color: #ffffff;
+}
+
+.mui-table-view-cell>a:not(.mui-btn).mui-active {
+	background-color: #FFFFFF;
+}
+
+#listdata .mui-table-view-cell {
+	display: flex;
+	align-items: center;
+	min-height: 43px;
+	line-height: normal;
+}
+
+.mui-table-view-cell>a:not(.mui-btn) {
+	/*padding: 10px 0!important;*/
+	white-space: normal;
+}

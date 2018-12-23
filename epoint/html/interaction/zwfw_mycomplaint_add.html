@@ -1,0 +1,54 @@
+<!-- 
+	作者：
+    创建时间：2017/6/13 9:26
+	版本：[1.0,2017/6/13]
+	版权：江苏国泰新点软件有限公司
+	描述：新增 我的投诉
+-->
+<!DOCTYPE html >
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>新增投诉</title>
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'css/mui.min.css',
+				'css/common/common.css',
+				'css/interaction/zwfw_mycomplaint_add.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-input-row">
+			<textarea id="textarea" rows="5" placeholder="输入您的投诉内容" class="input-txt"></textarea>
+		</div>
+		<div class="mui-navigate-right" id="area">
+			<span class="area">中心</span>
+			<div id="center"></div>
+			<!--<input id="center" type="text" disabled="disabled" />-->
+			<input type="hidden" id="centerValue" value="" />
+		</div>
+		<div class="anonymous">
+			<span>是否匿名</span>
+			<div class="mui-switch mui-switch-mini">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</div>
+		<input type="hidden" value="" />
+		<button type="button" class="mui-btn mui-btn-primary mui-btn-block add-btn" id="tijiao">提交</button>
+	</body>
+	<!-- 通用js -->
+	<script>
+		SrcBoot.outSeaConfig();
+	</script>
+	<script>
+		seajs.use("../../js/bizlogic/interaction/zwfw_mycomplaint_add.js");
+	</script>
+
+</html>

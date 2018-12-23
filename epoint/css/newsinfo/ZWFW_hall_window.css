@@ -1,0 +1,87 @@
+/** 
+ * 作者： 李鹏
+ * 创建时间：2017/06/16 14:47:28
+ * 版本： [1.0, 2017/6/16]
+ * 版权： 江苏国泰新点软件有限公司
+ * 描述： 大厅排队信息
+**/
+.em-search-wrapper{
+	overflow: hidden;
+	padding: 8px 0px 8px 10px;
+	background-color: #fff;
+}
+.em-search-left-item{
+	float: left;
+	width: 80%;
+}
+.em-search-right-item{
+	float: left;
+	width: 20%;
+	display: flex;
+	justify-content: center;
+}
+.em-search-icon{
+	position: absolute;
+	left: 15px;
+	width: 23px;
+	height: 19px;
+	top: 15px;
+}
+input[type="search"]{
+	background-color: #F0F0F0;
+	margin-bottom: 0px !important;
+	padding-left: 34px;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */ 
+	font-size:14px;
+	text-align: left;
+} 
+/**列表详情**/
+.mui-table-view-cell{
+	display: flex;
+	justify-content: space-between;
+	padding: 11px 10px;
+}
+.mui-table-view-cell p span{
+	padding-top: 8px;
+}
+.em-appeal-name{
+	margin-right: 8px;
+	color: #3C80E6;
+	font-size: 16px;
+}
+.em-hall{
+	font-size: 16px;
+	color: #333333;
+}
+.em-hall span{
+	color: #888888;
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+}
+a{
+	color: #3C80E6;
+	font-size: 13px;
+}
+.em-wait-num{
+	color: #888888;
+	font-size: 13px;
+}
+.em-wait-num span{
+	display: flex;
+	align-items: center;
+}
+.em-wait-people-num{
+	color: #e6443c;
+	font-size: 13px;
+}
+.em-window-icon,.em-people-icon{
+	width: 15px;
+	height: 15px;
+	margin-right: 8px;
+}
+.em-now-appeal{
+	color: #3c80e6;
+	font-size: 13px;
+}

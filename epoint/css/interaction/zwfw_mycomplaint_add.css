@@ -1,0 +1,75 @@
+/**
+ * 作者: 
+ * 创建时间:2017/6/013 10:11:35
+ * 版本:[1.0, 2017/6/13]
+ * 版权:江苏国泰新点软件有限公司
+ * 描述:我的投诉 新增
+ */
+
+body {
+	background-color: #f5f5f5;
+}
+
+.mui-input-row {
+	margin-top: 14px;
+}
+
+.input-txt {
+	font-size: 15px;
+}
+
+.add-btn {
+	position: fixed;
+	bottom: 0;
+	margin-bottom: 0;
+	height: 44px;
+	border-radius: 0;
+	padding: 0;
+	border-color: #3182eb;
+	background-color: #3182eb;
+	font-size: 18px;
+	color: #fff;
+}
+
+.mui-navigate-right {
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: 40px;
+	background-color: #FFFFFF;
+	font-size: 15px;
+	color: #333;
+}
+
+.mui-navigate-right:active {
+	color: #333333;
+	background-color: #f5f5f5;
+}
+
+.mui-navigate-right input {
+	margin-bottom: 0;
+	border: 0;
+	font-size: 15px;
+	background-color: transparent;
+}
+
+.area {
+	margin-left: 15px;
+	width: 20%;
+	white-space: nowrap;
+}
+
+
+/*是否匿名*/
+
+.anonymous {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+	padding: 0 15px;
+	height: 40px;
+	font-size: 15px;
+	color: #333333;
+	background-color: #FFFFFF;
+}

@@ -1,0 +1,65 @@
+<!-- 
+	作者：
+    创建时间：2017/6/13 9:26
+	版本：[1.0,2017/6/13]
+	版权：江苏国泰新点软件有限公司
+	描述：我的预约 时间段选择
+-->
+<!DOCTYPE html >
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>预约时间</title>
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'css/mui.min.css',
+				'css/common/common.css',
+				'../../css/interaction/zwfw_myappointment_time.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell row">
+				<a class="mui-navigate-right current row">
+					<label>预约部门</label>
+					<span class="item-names" id="spanouname"></span>
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right current row">
+					<label>办理事项</label>
+					<div class="item-names" id="spantaskname"></div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" id="selectbut">
+					<label>预约日期</label>
+					<!--<select class="item-name" id="selectdate" >-->
+					<input type="text" readonly="readonly" placeholder="" class="item-name" id="selectdate" value="" />
+					<input type="hidden" readonly="readonly" placeholder="" id="select" value="" />
+					<!--</select>-->
+				</a>
+			</li>
+			<li class="mui-table-view-divider">
+				<span>预约时间段</span>
+			</li>
+			<span id="spantimelist"></span>
+		</ul>
+	</body>
+	<!-- 通用js -->
+	<script>
+		SrcBoot.outSeaConfig();
+	</script>
+	<script>
+		seajs.use("../../js/bizlogic/interaction/zwfw_myappointment_time.js");
+	</script>
+
+</html>

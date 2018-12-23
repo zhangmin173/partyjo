@@ -1,0 +1,45 @@
+.mui-content>.mui-table-view:first-child {
+	margin-top: 0;
+}
+
+.mui-table-view-cell {
+	font-size: 15px;
+}
+
+.mui-table-view-cell span:first-child {
+	float: left;
+	color: #666;
+	width: 72px;
+}
+
+.mui-table-view-cell span:last-child {
+	float: right;
+	color: #333;
+	text-align: right;
+	width: calc(100% - 80px);
+}
+
+.mui-table-view-cell.long {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.mui-table-view-cell.long span {}
+
+.mui-table-view-cell.long span:first-child {
+	width: 72px;
+	line-height: 16px;
+}
+
+.mui-table-view-cell.long span:last-child {
+	width: calc(100% - 80px);
+	line-height: 32px;
+}
+
+.mui-table-view-cell.width-100 span:first-child {
+	width: 100px;
+}
+
+.mui-table-view-cell.width-100 span:last-child {
+	width: calc(100% - 110px);
+}

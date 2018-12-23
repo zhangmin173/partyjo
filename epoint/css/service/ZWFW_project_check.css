@@ -1,0 +1,92 @@
+.mui-content {
+	margin: 25px 15px 55px 15px;
+	background: #f6f5fa;
+}
+body{
+	background: #f6f5fa;
+}
+.tip {
+	color: #999;
+	font-size: 14px;
+	line-height: 30px;
+	margin-left: 15px;
+}
+
+.foot {
+	background: #fff;
+	width: 100%;
+	color: #fff;
+	position: absolute;
+	bottom: 0;
+	height: 54px;
+	border-top: 1px solid #d8d8d8;
+}
+
+.btn {
+	height: 38px;
+	line-height: 38px;
+	margin: 8px 15px;
+	text-align: center;
+	color: #fff;
+	background: #067aea;
+	border-radius: 5px;
+}
+
+.btn:active {
+	background: #0c5eac;
+}
+
+.mui-input-group {
+	margin-top: 5px;
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+	height: 44px;
+}
+
+.mui-input-row label {
+	padding: 13px 15px;
+	font-size: 16px;
+	color: #666666;
+	width: 120px;
+}
+
+.mui-input-row label~input {
+	font-size: 16px;
+	color: #666666;
+	width: calc(100% - 120px);
+}
+
+.mui-input-group .mui-input-row:after {
+	height: 0;
+}
+
+.mui-input-group:before {
+	height: 0;
+}
+
+.mui-input-group:after {
+	height: 0;
+}
+
+input[type=text] {
+	height: 44px;
+	padding: 0 10px 0px 0px;
+	line-height: 44px;
+}
+
+.point {
+	float: left;
+	height: 5px;
+	width: 5px;
+	border-radius: 50%;
+	background: #3c80e6;
+	margin-top: 6px;
+	margin-right: 5px;
+}
+.bottom-bg{
+	position: absolute;
+	bottom: 48px;
+}
+.bottom-bg img{
+	width: 100%;
+}

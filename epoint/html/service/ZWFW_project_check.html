@@ -1,0 +1,55 @@
+<!--
+	作者 :黄赟博
+	创建时间 :2017/05/24 10:11:36
+	版本 :[1.0, 2017/5/24]
+	版权：江苏国泰新点软件有限公司
+	描述：项目信息查看
+-->
+
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'../../css/mui.min.css',
+				'../../css/service/ZWFW_project_check.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<span class="tip">请认真填写以下信息来进行办件的查询</span>
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>
+						<i class="point"></i>
+					<span>办件编号:</span>
+					</label>
+					<input id="projectno" class="" type="text" placeholder="请填写办件时的编号"/>
+				</div>
+			</div>
+		</div>
+		<div class="bottom-bg">
+			<img src="../../img/service/img_projectcheck.png" />
+		</div>
+		<div class="foot">
+			<div class="btn">提交</div>
+		</div>
+		<script>
+			SrcBoot.outSeaConfig();
+		</script>
+		<script>
+			seajs.use('../../js/bizlogic/service/ZWFW_project_check.js');
+		</script>
+	</body>
+
+</html>

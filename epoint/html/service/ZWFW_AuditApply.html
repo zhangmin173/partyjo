@@ -1,0 +1,103 @@
+<!-- 
+作者: daike
+时间: 2016-08-29
+描述: 自助申报 
+-->
+
+<!DOCTYPE html >
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>自助申报</title>
+		<script>
+			//这是属于老版的缓存控制方案,后续的自定构建解决缓存也兼容这种模式,所以写法没问题
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			//支持项目相对路径和绝对路径
+			SrcBoot.output([
+				'css/mui.min.css',
+				'css/common/common.css',
+				'../../css/service/ZWFW_auditapply.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<div class="mui-input-group">
+				<div class="mui-input-row firstType">
+					<label>申请类型</label>
+					<input type="text" id="applyertypeTxt" value="个人" readonly="readonly">
+					<input type="hidden" id="applyertype" value="20" />
+					<div class="mui-icon mui-icon-arrowright"></div>
+				</div>
+				<div class="mui-input-row">
+					<label class="name">申请人</label>
+					<input type="text" id="applyername" placeholder="请输入名称（必填）" maxlength="50">
+				</div>
+				<div class="type1">
+					<div class="mui-input-row">
+						<label>证件类型</label>
+						<input type="text" value="身份证" readonly="readonly">
+					</div>
+				</div>
+				<div class="type2 idcardtype">
+					<div class="mui-input-row">
+						<label>证件类型</label>
+						<input type="text" id="certtypetxt" value="统一社会信用代码" readonly="readonly">
+						<input type="hidden" id="certtype" value="16" />
+						<div class="mui-icon mui-icon-arrowright"></div>
+					</div>
+				</div>
+				<div class="type2">
+					<div class="mui-input-row">
+						<label>法人代表</label>
+						<input type="text" id="legal" placeholder="请输入法人代表（必填）" maxlength="15">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>证件号码</label>
+					<input type="text" id="idcard" placeholder="请输入证件号码（必填）" maxlength="50">
+				</div>
+				<div class="mui-input-row">
+					<label>联系人</label>
+					<input type="text" id="contactname" placeholder="请输入联系人（必填）" maxlength="15">
+				</div>
+				<div class="mui-input-row">
+					<label>联系人手机</label>
+					<input type="text" id="contactmobile" placeholder="请输入联系人手机（必填）" maxlength="15">
+				</div>
+				<div class="mui-input-row">
+					<label>联系人身份证</label>
+					<input type="text" id="contactidnum" placeholder="请输入联系人身份证（必填）" maxlength="20">
+				</div>
+				<div class="mui-input-row">
+					<label>联系地址</label>
+					<input type="text" id="address" placeholder="请输入联系地址（必填）" maxlength="60">
+				</div>
+				<div class="mui-input-row area">
+					<label>中心</label>
+					<input type="text" id="center" placeholder="请选择中心" readonly="readonly">
+					<input type="hidden" id="centerValue">
+					<div class="mui-icon mui-icon-arrowright"></div>
+				</div>
+			</div>
+			<button id="btnnext" type="button" class="nextbtn mui-btn-primary mui-btn-block">下一步</button>
+		</div>
+	</body>
+	<!-- 通用seajs配置 -->
+	<script>
+		//将需要的配置文件进行封装函数,可以省去重复代码
+		//所有的seajs别名或者项目中bizlogic文件夹下的js都需要在seaBizConfig.js中设置别名,通过别名引用
+		//实际项目中请删除这些注释
+		SrcBoot.outSeaConfig();
+	</script>
+	<script>
+		seajs.use('../../js/bizlogic/service/ZWFW_AuditApply.js');
+	</script>
+
+</html>

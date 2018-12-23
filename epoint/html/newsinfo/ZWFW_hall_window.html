@@ -1,0 +1,70 @@
+<!-- 
+        作者： 李鹏
+        创建时间：2017-10-31
+        版本： [1.0, 2017/10/31]
+        版权： 江苏国泰新点软件有限公司
+        描述： 窗口排队情况
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>窗口排队情况</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'../../css/mui.min.css',
+				'../../css/common/common_nodata.css',
+				'../../css/newsinfo/ZWFW_hall_window.css',
+				'../../css/newsinfo/common_form.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!--搜索框-->
+			<div class="em-search-wrapper">
+				<div class="em-search-left-item">
+					<img src="../../img/newsinfo/img_zwfw_search.png" alt="" class="em-search-icon" /><input type="search" placeholder="输入取票号，查询排队情况" id="keyword" />
+				</div>
+				<div class="em-search-right-item">
+					<button id="btn_search" class="mui-btn mui-btn-primary">搜索</button>
+				</div>
+			</div>
+			<ul class="mui-table-view" id="">
+				<div id="listdata">
+					
+				</div>
+				<div class="em-tips" id="nodata">
+					<img src="../../img/newsinfo/img_data_empty_bg.png" class="nodata" />
+					<p>暂无取票信息</p>
+				</div>
+			</ul>
+		</div>
+		<!--映射列表模板-->
+		<script type="text/x-tpl" id="template">
+			<li class="mui-table-view-cell" data-code="{{windowguid}}">
+				<p class="em-hall">
+					<a href="javascript:void(0)" class="em-appeal-name">{{windowno}}</a>{{windowname}}<br /><span><img src="../../img/newsinfo/img_zwfw_people.png" alt="" class="em-window-icon" />等待人数：<a href="javascript:void(0)" class="em-wait-people-num">{{waitcount}}</a>个</span></p>
+				<p class="em-wait-num"><br /><span><img src="../../img/newsinfo/img_zwfw_time.png" alt="" class="em-people-icon"/>当前办理：<a href="javascript:void(0)" class="em-now-appeal">{{currenthandleqno}}</a></span></p>
+			</li>
+		</script>
+		<!--映射完整模板-->
+		<script type="text/x-tpl" id="template2">
+			<!--列表-->
+
+		</script>
+		<script>
+			SrcBoot.outSeaConfig();
+		</script>
+		<script>
+			seajs.use('../../js/bizlogic/newsinfo/ZWFW_hall_window.js');
+		</script>
+	</body>
+
+</html>

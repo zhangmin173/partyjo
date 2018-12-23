@@ -1,0 +1,101 @@
+<!--
+	作者 :黄赟博
+	创建时间 :2017/05/24 10:11:36
+	版本 :[1.0, 2017/5/24]
+	版权：江苏国泰新点软件有限公司
+	描述：事项列表
+-->
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'../../css/mui.min.css',
+//				'../../css/common/common.css',
+				'../../css/service/ZWFW_Common_list.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!-- 搜索 -->
+			<div class="mui-input-row mui-search">
+				<input type="search" id="searchContent" class="mui-input-clear" placeholder="请输入搜索关键字">
+			</div>
+			<!--  -->
+			<div class="mui-scroll-wrapper" id="pullrefresh">
+				<div class="mui-scroll">
+					<!--这里放置真实显示的DOM内容-->
+					<ul class="mui-table-view" id="listdata">
+						<!--<li class="mui-table-view-cell" id="{{taskguid}}">
+							<div class="main-area" guid="{{taskguid}}">
+								<i class="arrow" flag="1"></i>
+								<div class="mask-layer">
+									<p>
+										<span class="circle1">申请</span>
+										<span class="circle2">预约</span>
+										<span class="circle3">收藏</span>
+									</p>
+									<div></div>
+								</div>
+								<div class="title mui-ellipsis-2">因参与传染病防治工作致病、致残、死亡人员的补助、抚恤</div>
+							</div>
+							<div class="childarea">
+								<div class="childarea-child" guid="">
+									<div class="mask-layer">
+										<p>
+											<span class="circle1">申请</span>
+											<span class="circle2">预约</span>
+											<span class="circle3">收藏</span>
+										</p>
+										<div></div>
+									</div>
+									<div class="title mui-ellipsis-2">精神卫生工作人员的津贴、工伤待遇以及抚恤神卫生工作人员的津贴、工伤待遇以及抚恤神卫生工作人员的津贴、工伤待遇以及抚恤
+									</div>
+									<p>区残疾人联合会</p>
+								</div>
+							</div>
+						</li>-->
+
+						<!--<li class="mui-table-view-cell">
+							<div class="main-area" guid="{{taskguid}}">
+								<div class="mask-layer">
+								<p>
+									<span class="circle1">申请</span>
+											<span class="circle2">预约</span>
+											<span class="circle3">收藏</span>
+								</p>
+								<div></div>
+							</div>
+								<div class="title">{{taskname}}</div>
+								<p>{{ouname}}</p>
+							</div>
+						</li>-->
+					</ul>
+					<!--<div class="custom-bottom-tips">
+						<span class="left-line"></span>
+						<span class="tips">已经到最底了</span>
+						<span class="right-line"></span>
+					</div>-->
+				</div>
+			</div>
+
+		</div>
+
+		<script>
+			SrcBoot.outSeaConfig();
+		</script>
+		<script>
+			seajs.use('../../js/bizlogic/service/ZWFW_Common_list.js');
+		</script>
+	</body>
+
+</html>

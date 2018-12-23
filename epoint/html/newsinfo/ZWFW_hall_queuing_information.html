@@ -1,0 +1,82 @@
+<!-- 
+        作者： 李鹏
+        创建时间：2017-10-31
+        版本： [1.0, 2017/10/31]
+        版权： 江苏国泰新点软件有限公司
+        描述： 大厅排队情况
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>大厅排队情况</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script>
+			document.write("<script type='text/javascript' src='../../js/core/RayApp/cacheControl.config.js?" + Math.random() + "'></scr" + "ipt>");
+		</script>
+		<script>
+			SrcBoot.output([
+				'../../css/mui.min.css',
+				'../../css/common/common_nodata.css',
+				'../../css/newsinfo/ZWFW_hall_queuing_information.css',
+				'../../css/newsinfo/common_form.css'
+			]);
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content" id="listdata">
+
+		</div>
+		<!--映射完整模板-->
+		<script type="text/x-tpl" id="template">
+			<!--搜索框-->
+			<div class="em-search-wrapper">
+				<div class="em-search-left-item">
+					<img src="../../img/newsinfo/img_zwfw_search.png" alt="" class="em-search-icon" /><input type="search" placeholder="输入取票号，查询排队情况" id="keyword" />
+				</div>
+				<div class="em-search-right-item">
+					<button id="btn_search" class="mui-btn mui-btn-primary">搜索</button>
+				</div>
+			</div>
+			<!--左右两侧标题栏-->
+			<div class="em-column-wrapper">
+				<div class="em-column-left-item">
+					<img src="../../img/newsinfo/img_zwfw_pickup.png" alt="" class="em-column-img" />
+					<div class="em-column-content"><span id="em-pickup-text">{{totalqueuecount}}</span><br /><span class="em-default-text">今日取号</span></div>
+				</div>
+				<div class="em-column-right-item">
+					<img src="../../img/newsinfo/img_zwfw_appeal.png" alt="" class="em-column-img" />
+					<div class="em-column-content"><span id="em-appeal-text">{{totalprojectcount}}</span><br /><span class="em-default-text">今日受理</span></div>
+				</div>
+			</div>
+			<!--中心当前等待人数-->
+			<div class="em-wait-personNum">
+				<div class="em-wait-column-left"><img src="../../img/newsinfo/img_zwfw_person.png" alt="" />中心当前等待人数</div>
+				<div class="em-wait-column-right"><span id="em-wait-total">{{totalwaitcount}}</span>人</div>
+			</div>
+			<!--列表-->
+			<ul class="mui-table-view" id="listdata2">
+				<div class="em-tips" id="nodata">
+					<img src="../../img/newsinfo/img_data_empty_bg.png" class="nodata" />
+					<p>暂无排队信息</p>
+				</div>
+			</ul>
+		</script>
+		<!--映射列表模板-->
+		<script type="text/x-tpl" id="template2">
+			<li class="mui-table-view-cell" data-code="{{hallguid}}">
+				<p class="em-hall">{{hallname}}<br /><span><img src="../../img/newsinfo/img_zwfw_window.png" alt="" class="em-window-icon" />窗口数：<a href="javascript:void(0)">{{windowcount}}</a></span></p>
+				<p class="em-wait-num"><br /><span><img src="../../img/newsinfo/img_zwfw_people.png" alt="" class="em-people-icon"/>等待人数：<a href="javascript:void(0)" class="em-wait-people-num">{{waitcount}}</a>个</span></p>
+			</li>
+		</script>
+		<script>
+			SrcBoot.outSeaConfig();
+		</script>
+		<script>
+			seajs.use('../../js/bizlogic/newsinfo/ZWFW_hall_queuing_information.js');
+		</script>
+	</body>
+
+</html>
