@@ -21,14 +21,13 @@
   </div>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each OUList as d}
-      <a class="dpt" href="affair.html?id={d.OUInfo.OUGuid}">
+    {each data as d}
+      <a class="dpt" href="affair.html?id={d.hallguid}">
         <div class="dpt-left">
           <i class="icon icon-md icon-danweitubiao"></i>
         </div>
         <div class="dpt-mid">
-          <div class="name">{d.OUInfo.OUName}</div>
-          <div class="intro">{d.OUInfo.TaskNum} 个事项</div>
+          <div class="name">{d.hallname}</div>
         </div>
         <div class="dpt-right">
           <i class="icon icon-sm icon-youjiantou"></i>
@@ -38,9 +37,10 @@
   </script>
   <script>
     $(function() {
-
-      $.request('getTaskKindOU_YY',{},function(res) {
-        $.render('tpl-main',res.data,function(html) {
+      // $.isRegister()
+      
+      $.request('getLobby',{},function(res) {
+        $.render('tpl-main',res,function(html) {
           $('#j-main').append(html);
         })
       })

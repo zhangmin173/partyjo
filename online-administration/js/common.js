@@ -5,9 +5,12 @@ window.debug = true,
 window._global = {
 	browser: null,
     url: {
+        // api: '/api/'
         api: '//wechat.nextdog.cc/partyjo-web/api/'
         //api: 'http://zhangmin.com/partyjo-web/api/'
-    }
+    },
+    root: 'https://yc.huzhou.gov.cn:8888/wsdt/rest',
+    key: 'USERINFO'
 };
 
 +function($) {
@@ -172,8 +175,90 @@ window._global = {
                 );
             });
         },
+        isRegister: function(successcallback, errorcallback) {
+            $.request('is_oauth', { url: window.location.href }, function(res) {
+                var OpenID = res.data.openid
+                $.request('getUserByOpenid', {
+                    openid: OpenID
+                }, function(r) {
+                    if (r.ret == 1) {
+                        successcallback(r);
+                    } else {
+                        var targetUrl = $.getUrlpara('targetUrl');
+                        errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
+                    }
+                })
+            })
+        },
+        wxUserBind: function(data, successcallback, errorcallback) {
+            $.request('wxUserBind', data, function(res) {
+                if (res.ret == 1) {
+                    successcallback(res);
+                } else {
+                    errorcallback && errorcallback(res)
+                }
+            })
+        },
+        register: function(data, successcallback, errorcallback) {
+            $.request('wxUserRegister', data, function(res) {
+                if (res.ret == 1) {
+                    successcallback(res);
+                } else {
+                    errorcallback && errorcallback(res)
+                }
+            })
+        },
+        encodeUtf8: function (s1) {
+            var s = escape(s1);
+            var sa = s.split("%");
+            var retV = "";
+            if (sa[0] !== "") {
+                retV = sa[0];
+            }
+            for (var i = 1; i < sa.length; i++) {
+                if (sa[i].substring(0, 1) == "u") {
+                    retV += Hex2Utf8(Str2Hex(sa[i].substring(1, 5)));
+                    if (sa[i].length > 5) {
+                        retV += sa[i].substring(5);
+                    }
+
+                } else retV += "%" + sa[i];
+            }
+
+            return retV;
+        },
+        encode: function (input) {
+            // 先进行utf-8编码,解决中文问题
+            input = $.encodeUtf8(input);
+            // 对%做replace替换
+            input = input.replace(/%/g, "_PERCENT_");
+
+            // 对所有字符做ascii码转换
+            var output = "",
+                chr1 = "",
+                i = 0,
+                l =input.length;
+            do {
+                // 取字符的ascii码
+                chr1 = input.charCodeAt(i++);
+                // 偏移比较复杂，这里做个递减
+                chr1 -= i;
+                // =分割便于后台解析
+                output = output + "=" + (chr1);
+            } while (i < l);
+
+            return output;
+        },
         // ajax请求
-        request: function(url, data, call,type) {
+        request: function(url, data, call, type, USER) {
+            var userinfo = JSON.parse(window.localStorage.getItem(window._global.key))
+            if (url === 'is_oauth' && userinfo) {
+                window._global.user = userinfo
+                call && call({
+                    data: userinfo
+                });
+                return false;
+            }
             var methods = 'post';
             if (type) {
                 methods = type;
@@ -184,6 +269,9 @@ window._global = {
                 // access_token: _global.access_token,
                 // site_id: _global.site_info.id,
                 }, data);
+            if (USER) {
+                paras.token = USER.token
+            }
             $.log(paras,url + '请求参数');
             $.ajax({
                 type: methods,
@@ -200,16 +288,67 @@ window._global = {
                 } else if (res.ret == 1002) {
                     var path = window.location.href;
                     if (path.indexOf('register')>=0) {
-
+                        
                     } else {
                         if (confirm('现在去注册？')) {
                             window.location.href = 'register.html';
                         }
                     }
-
+                    window.localStorage.setItem(window._global.key, JSON.stringify(res.data))
+                    window._global.user = res.data
                 } else {
+                    if (url === 'is_oauth') {
+                        window.localStorage.setItem(window._global.key, JSON.stringify(res.data))
+                        window._global.user = res.data
+                    }
+                    // res.ret = res.code;
                     call && call(res);
                 }
+            }).fail(function() {
+                $.pop('请求失败');
+                setTimeout(function() {
+                    $.loading();
+                },800);
+                $.log('请求失败',url + '接口错误');
+            });
+        },
+        // ajax请求
+        fetch: function(url, data, call, type, options) {
+            var methods = 'post';
+            if (type) {
+                methods = type;
+            }
+            $.loading();
+            paras = $.extend({
+                centerguid: '6bef18db-f0b8-49fd-9d39-e406ad6d5bd5'
+            }, data);
+            var requestData = {
+                token: 'Epoint_WebSerivce_**##0601',
+                params: paras
+            }
+            $.log(paras,url + '请求参数');
+            $.ajax({
+                type: methods,
+                url: _global.root + url,
+                dataType: 'json',
+                data: requestData,
+                headers: {
+                    Accept: "text/html;charset=utf-8",
+                    Authorization: "Bearer " + options.token || ''
+                },
+                contentType: 'application/json;charset=UTF-8',
+            }).done(function(res) {
+                $.loading();
+                $.log(res,url + '返回数据');
+                if(res.status.code != 200) {
+					$.pop(res.status.text);
+					return;
+				}
+				if(res.custom.code == 0) {
+					$.pop(res.custom.text);
+					return;
+				}
+                call && call(res);
             }).fail(function() {
                 $.pop('请求失败');
                 setTimeout(function() {

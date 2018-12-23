@@ -42,15 +42,15 @@
   <button class="btn appoint-btn" type="button">同意并预约</button>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each YuYueDateList as d i}
-    <li class="{if i == 0}active loaded{/if}" data-date="{d.YuYueDateInfo.Date}">{d.YuYueDateInfo.Date.substring(5,10)}</li>
+    {each data as d i}
+    <li class="{if i == 0}active loaded{/if}" data-date="{d.appointdate}">{d.appointdate.substring(5,10)}</li>
     {/each}
   </script>
   <script id="tpl-time" type="text/html">
-    {each YuYueTimeList as d i}
-      <div class="time-picker {if i == 0}active{/if}" data-stime="{d.YuYueTimeInfo.YuYueTimeStart}" data-etime="{d.YuYueTimeInfo.YuYueTimeEnd}">
-        <span class="time">{d.YuYueTimeInfo.YuYueTimeStart + '-' + d.YuYueTimeInfo.YuYueTimeEnd}</span>
-        <span class="num">余号：{d.YuYueTimeInfo.YuYueSum - d.YuYueTimeInfo.YiYuYueSum}</span>
+    {each data as d i}
+      <div class="time-picker {if i == 0}active{/if}" data-stime="{d.appointtimestart}" data-etime="{d.appointtimeend}">
+        <span class="time">{d.appointtimestart + '-' + d.appointtimeend}</span>
+        <span class="num">余号：{d.appointmaxsum - d.appointsum}</span>
       </div>
     {/each}
   </script>
@@ -60,17 +60,21 @@
       var id = $.getUrlPara('id'),
         dateIndex = 0;
 
-      $.request('getYuYueDateList',{ showDays: 5 },function(res) {
-        if (res.ret == 1) {
-          $.render('tpl-main',res.data,function(html) {
+      var User
+      $.isRegister(function(r) {
+        User = r.data
+        $.request('getYuYueDateList',{ showDays: 5 },function(res) {
+          if (res.ret == 1) {
+            $.render('tpl-main',res,function(html) {
             $('#j-main').append(html);
-            getTime(id,res.data.YuYueDateList[0].YuYueDateInfo.Date,function(d) {
+            getTime(id,res.data[0].appointdate,function(d) {
               $.render('tpl-time',d,function(_html) {
                 $('#j-wrap-0').html(_html);
               })
-            })
+            }, User)
           })
-        }
+          }
+        }, 'get', User);
       })
 
       $('.time-wrap').on('click','.time-picker',function() {
@@ -94,7 +98,7 @@
               $('#j-wrap-' + index).html(_html);
             })
             showTimeWrap(index);
-          })
+          }, User)
         }
       })
 
@@ -124,12 +128,12 @@
         })
       }
 
-      function getTime(taskGuid,date,call) {
+      function getTime(taskGuid,date,call, options) {
         $.request('getYuYueTimeList',{ taskGuid: taskGuid, yuYueDate: date },function(res) {
           if (res.ret == 1) {
-            call && call(res.data);
+            call && call(res);
           }
-        })
+        }, 'get', options)
       }
 
       function showTimeWrap(index) {

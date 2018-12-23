@@ -22,39 +22,39 @@
   </div>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each AppointmentList as d}
+    {each appointdatelist as d}
     <div class="at-wrap">
       <div class="at-detail">
         <div class="name">票码</div>
-        <div class="info">{d.AppointmentInfo.QNO?d.AppointmentInfo.QNO:d.AppointmentInfo.YuYueStatus}</div>
+        <div class="info">{d.queueguid?d.queueguid:d.status}</div>
       </div>
       <div class="at-detail">
         <div class="name">取号时间</div>
-        <div class="info">{d.AppointmentInfo.AppointmentTime}</div>
+        <div class="info">{d.createdate}</div>
       </div>
       <div class="at-detail">
         <div class="name">部门</div>
-        <div class="info">{d.AppointmentInfo.OUNAME}</div>
+        <div class="info">{d.ouname}</div>
       </div>
       <div class="at-detail">
         <div class="name">姓名</div>
-        <div class="info">{d.AppointmentInfo.Name}</div>
+        <div class="info"></div>
       </div>
       <div class="at-detail">
         <div class="name">手机号</div>
-        <div class="info">{d.AppointmentInfo.Phone}</div>
+        <div class="info"></div>
       </div>
       <div class="at-detail">
         <div class="name">身份证</div>
-        <div class="info">{d.AppointmentInfo.SFZ}</div>
+        <div class="info"></div>
       </div>
       <div class="at-detail">
         <div class="name">业务</div>
-        <div class="info">{d.AppointmentInfo.TaskName}</div>
+        <div class="info">{d.taskname}</div>
       </div>
       <div class="at-detail">
         <div class="name">当前等待人数</div>
-        <div class="info">{d.AppointmentInfo.WaitNum}</div>
+        <div class="info"></div>
       </div>
     </div>
     {/each}
@@ -91,7 +91,7 @@
       function doLoad() {
         loadData(function(res) {
           if (res.ret == 1) {
-            opts.total = res.data.TotalCount;
+            opts.total = res.data.totalcount;
             if (opts.total < opts.pageIndex*opts.pageSize) {
               opts.isOver = true;
             }

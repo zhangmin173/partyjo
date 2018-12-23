@@ -23,31 +23,14 @@
   </div>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each TaskList as d}
+    {each data as d}
     <div class="affair">
       <div class="affair-hd">
-        {d.TaskInfo.TaskName}
+        {d.themename}
       </div>
       <div class="affair-bd">
-        <div class="affair-detail">
-          <span class="name">受理机构：</span>
-          <span class="info">{d.TaskInfo.OUNAME}</span>
-        </div>
-        <div class="affair-detail">
-          <span class="name">承诺期限：</span>
-          <span class="info">{d.TaskInfo.PROMISE_DAY} 工作日</span>
-        </div>
-        <div class="affair-detail">
-          <span class="name">联系电话：</span>
-          <span class="info">{d.TaskInfo.LINK_TEL}</span>
-        </div>
-        <div class="affair-detail">
-          <span class="name">办公地址：</span>
-          <span class="info">{d.TaskInfo.ApplyAddress}</span>
-        </div>
         <div class="affair-btns">
-          <a class="btn-l" href="affair_detail.html?id={d.TaskInfo.TaskGuid}">材料清单</a>
-          <a class="btn-r" href="affair_appoint.html?id={d.TaskInfo.TaskGuid}">网上预约</a>
+          <a class="btn-l" href="affair_appoint.html?id={d.themeguid}">网上预约</a>
         </div>
       </div>
     </div>
@@ -60,54 +43,19 @@
       var opts = {
         box: '#j-main',
         model: 'tpl-main',
-        isOver: false,
-        isLoading: false,
-        isOneShow: true,
-        initNoData: '',
-        noData: '',
-        errorData: '',
         pageIndex: 1,
         pageSize: 10
       };
 
-      doLoad();
-
-      $(window).scroll(function () {
-          var totalheight = Math.ceil($(window).height()) + Math.ceil($(window).scrollTop());
-          if ($(document).height() <= totalheight) {
-              if (opts.isOver == false && opts.isLoading == false) {
-                doLoad();
-              } else if (opts.isOver) {
-                console.log('没有更多数据了');
-              }
-          }
-      });
-
-      function doLoad() {
-        loadData(function(res) {
-          if (res.ret == 1) {
-            opts.total = res.data.TotalCount;
-            if (opts.total < opts.pageIndex*opts.pageSize) {
-              opts.isOver = true;
-            }
-            opts.pageIndex ++;
-            $.render(opts.model,res.data,function(html) {
-              $(opts.box).append(html);
-              opts.isLoading = false;
-              opts.isOneShow = false;
-            })
-          } else {
-            console.log(res.msg);
-          }
+      $.request('getTaskKindOU',{ 
+        lobbyType: id,
+        pageIndex: opts.pageIndex,
+        pageSize: opts.pageSize },function(res) {
+        $.render('tpl-main',res,function(html) {
+          $('#j-main').append(html);
         })
-      }
-
-      function loadData(call) {
-        opts.isLoading = true;
-        $.request('getTaskList_YY',{ oUGuid: id,pageIndex: opts.pageIndex, pageSize: opts.pageSize },function(res) {
-          call && call(res);
-        })
-      }
+      })
+      
     })
   </script>
 </body>

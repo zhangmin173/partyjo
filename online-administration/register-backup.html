@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.min.js"></script>
+  <script charset="utf-8" type="text/javascript" src="https://puser.zjzwfw.gov.cn/sso/js.do?servicecode=cxwxgz"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/register.css">
+  <title></title>
+</head>
+<body>
+  <img class="login-hd" src="img/login_hd.png">
+  <div id="j-chageLoginType" class="login-change">
+    <a class="active" href="javascript:;">个人登陆</a>
+    <a href="javascript:;">法人登陆</a>
+  </div>
+  <div class="line"></div>
+  <form class="form login-form">
+    <div class="form-item">
+      <label>账号：</label>
+      <input id="loginname" type="text" name="mobile">
+    </div>
+    <div class="form-item">
+      <label>密码：</label>
+      <input id="loginpwd" type="text" name="pwd">
+    </div>
+    <div class="error"></div>
+    <div class="btn-groups">
+      <button id="j-btn" class="form-btn" type="button">登陆</button>
+      <a class="l" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">我要注册</a>
+      <a class="r" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">忘记密码</a>
+    </div>
+  </form>
+  <div class="copyright">长兴县行政服务中心</div>
+  <script>
+    var loginType = 1;
+
+    $(function() {
+
+      $.request('is_oauth',{ url: window.location.href });
+
+      YH.method.autoLoginForJs();//自动登录
+      function login(){
+        var loginname = document.getElementById("loginname").value;
+        var loginpwd = document.getElementById("loginpwd").value;
+        YH.method.loginForJs(loginname, loginpwd,"001003076");
+      }
+      //登录成功
+      YH.callback.loginAppForJs = function(ticket){
+        $.request('login',{ ticket: ticket },function(res) {
+          if (res.ret == 1) {
+            window.location.href = 'user_center.html';
+          } else {
+            $('.error').html(res.msg);
+          }
+        })
+      }
+
+      //登录失败
+      YH.callback.showErrcode = function(errorMsg, errorcode){
+        $('.error').html(errorMsg);
+      }
+
+      $('#j-btn').on('click', function(event) {
+        if (loginType) {
+          login();
+        } else {
+          login2();
+        }
+      });
+
+      // 法人登陆
+      function login2() {
+        console.log('login2');
+        var loginname = document.getElementById("loginname").value;
+        var loginpwd = document.getElementById("loginpwd").value;
+        $.request('login2',{ loginname: loginname, loginpwd: loginpwd },function(res) {
+          if (res.ret == 1) {
+            window.location.href = 'user_center.html';
+          } else {
+            $('.error').html(res.msg);
+          }
+        })
+      }
+
+      $('#j-chageLoginType').on('click','a',function() {
+        $('#j-chageLoginType').find('a').removeClass('active');
+        $(this).addClass('active');
+        if($(this).index() == 0) {
+          loginType = 1;
+        } else {
+          loginType = 0;
+        }
+      })
+
+    })
+  </script>
+</body>
+</html>
