@@ -184,7 +184,7 @@ window._global = {
                     if (r.ret == 1) {
                         successcallback(r);
                     } else {
-                        var targetUrl = $.getUrlpara('targetUrl');
+                        var targetUrl = location.href;
                         errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
                     }
                 })

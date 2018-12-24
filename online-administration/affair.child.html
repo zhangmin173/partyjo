@@ -17,7 +17,7 @@
   <title></title>
 </head>
 <body>
-  <div class="nav-hd ft">事项列表</div>
+  <div class="nav-hd ft">主题列表</div>
   <div id="j-main" class="container">
 
   </div>
@@ -30,7 +30,7 @@
       </div>
       <div class="affair-bd">
         <div class="affair-btns">
-          <a class="btn-l" href="affair.child.html?id={d.themeguid}">选择主题</a>
+          <a class="btn-l" href="affair_appoint.html?id={d.themeguid}">网上预约</a>
         </div>
       </div>
     </div>
@@ -47,8 +47,8 @@
         pageSize: 10
       };
 
-      $.request('getTaskKindOU',{ 
-        lobbyType: id,
+      $.request('getTaskList',{ 
+        oUGuid: id,
         pageIndex: opts.pageIndex,
         pageSize: opts.pageSize },function(res) {
         $.render('tpl-main',res,function(html) {

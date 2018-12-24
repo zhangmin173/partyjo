@@ -80,12 +80,14 @@
           password: Password,
           openid: $.getUrlPara('openid'),
           encodepassword: $.encode(Password)
-        }, function () {
+        }, function (res) {
           if (targetUrl) {
             location.href = targetUrl;
           } else {
             location.href = './user_center.html';
           }
+        }, function(res) {
+          $.pop(res.msg)
         })
       }
 
@@ -93,7 +95,7 @@
         login();
       });
 
-      $('#j-registe').on('click', function() {
+      $('#j-register').on('click', function() {
         var url = './register.html'
         if (targetUrl) {
           var url = './register.html?targetUrl=' + targetUrl
