@@ -21,7 +21,7 @@
   </div>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each data as d}
+    {each halllist as d}
       <a class="dpt" href="affair.html?id={d.hallguid}">
         <div class="dpt-left">
           <i class="icon icon-md icon-danweitubiao"></i>
@@ -38,11 +38,13 @@
   <script>
     $(function() {
       // $.isRegister()
-      
-      $.request('getLobby',{},function(res) {
-        $.render('tpl-main',res,function(html) {
-          $('#j-main').append(html);
-        })
+      $.fetch({
+        url: '/hzqueueAppointment/getHallList',
+        success: function(res) {
+          $.render('tpl-main',res.custom,function(html) {
+            $('#j-main').append(html);
+          })
+        }
       })
     })
   </script>

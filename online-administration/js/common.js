@@ -9,7 +9,7 @@ window._global = {
         api: '//wechat.nextdog.cc/partyjo-web/api/'
         //api: 'http://zhangmin.com/partyjo-web/api/'
     },
-    root: 'https://yc.huzhou.gov.cn:8888/wsdt/rest',
+    root: 'https://yc.huzhou.gov.cn:8088/wsdt/rest',
     key: 'USERINFO'
 };
 
@@ -175,20 +175,42 @@ window._global = {
                 );
             });
         },
-        isRegister: function(successcallback, errorcallback) {
-            $.request('is_oauth', { url: window.location.href }, function(res) {
-                var OpenID = res.data.openid
-                $.request('getUserByOpenid', {
-                    openid: OpenID
-                }, function(r) {
-                    if (r.ret == 1) {
-                        successcallback(r);
-                    } else {
+        isRegister: function(successcallback) {
+            if (window.debug) {
+                $.fetch({
+                    url: '/hzzwfwWxUser/wzUserDetailByOpenID',
+                    data: {
+                        openid: 'o9-y-0zpSkPbcDqRpUel0kK50Adc'
+                    },
+                    success: function(res) {
+                        successcallback(res)
+                    },
+                    fail: function(res) {
+                        $.pop(res.custom.text)
                         var targetUrl = location.href;
                         errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
                     }
+                }) 
+            } else {
+                $.request('is_oauth', { url: window.location.href }, function(res) {
+                    var OpenID = res.data.openid
+                    $.fetch({
+                        url: '/hzzwfwWxUser/wzUserDetailByOpenID',
+                        data: {
+                            openid: OpenID
+                        },
+                        success: function(r) {
+                            r.wx = res.data
+                            successcallback(r)
+                        },
+                        fail: function(res) {
+                            $.pop(res.custom.text)
+                            var targetUrl = location.href;
+                            errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
+                        }
+                    })
                 })
-            })
+            }
         },
         wxUserBind: function(data, successcallback, errorcallback) {
             $.request('wxUserBind', data, function(res) {
@@ -313,48 +335,56 @@ window._global = {
             });
         },
         // ajax请求
-        fetch: function(url, data, call, type, options) {
-            var methods = 'post';
-            if (type) {
-                methods = type;
+        fetch: function(options) {
+            var _default = {
+                url: '',
+                data: {}, 
+                success: null,
+                fail: null,
+                type: 'post', 
+                user: {
+                    token: ''
+                }, 
+                error: null
             }
+            var opts = $.extend(_default, options)
             $.loading();
             paras = $.extend({
                 centerguid: '6bef18db-f0b8-49fd-9d39-e406ad6d5bd5'
-            }, data);
+            }, opts.data);
             var requestData = {
                 token: 'Epoint_WebSerivce_**##0601',
                 params: paras
             }
-            $.log(paras,url + '请求参数');
+            $.log(requestData, opts.url + '请求参数');
             $.ajax({
-                type: methods,
-                url: _global.root + url,
+                type: opts.type,
+                url: _global.root + opts.url,
                 dataType: 'json',
-                data: requestData,
+                data: JSON.stringify(requestData),
                 headers: {
                     Accept: "text/html;charset=utf-8",
-                    Authorization: "Bearer " + options.token || ''
+                    Authorization: "Bearer " + opts.user.token || ''
                 },
                 contentType: 'application/json;charset=UTF-8',
             }).done(function(res) {
                 $.loading();
-                $.log(res,url + '返回数据');
-                if(res.status.code != 200) {
-					$.pop(res.status.text);
-					return;
-				}
-				if(res.custom.code == 0) {
-					$.pop(res.custom.text);
-					return;
-				}
-                call && call(res);
+                $.log(res,opts.url + '返回数据');
+                if (res.status.code == 200 && res.custom.code == 1) {
+                    opts.success && opts.success(res)
+                } else {
+                    if (opts.fail) {
+                        opts.fail(res)
+                    } else {
+                        $.pop(res.custom.text)
+                    }
+                }
             }).fail(function() {
                 $.pop('请求失败');
                 setTimeout(function() {
                     $.loading();
                 },800);
-                $.log('请求失败',url + '接口错误');
+                $.log('请求失败',opts.url + '接口错误');
             });
         },
         // 浏览器尺寸改变函数

@@ -26,7 +26,7 @@
     <div class="at-wrap">
       <div class="at-detail">
         <div class="name">票码</div>
-        <div class="info">{d.queueguid?d.queueguid:d.status}</div>
+        <div class="info">{d.queueguid}</div>
       </div>
       <div class="at-detail">
         <div class="name">取号时间</div>
@@ -37,24 +37,20 @@
         <div class="info">{d.ouname}</div>
       </div>
       <div class="at-detail">
-        <div class="name">姓名</div>
-        <div class="info"></div>
-      </div>
-      <div class="at-detail">
-        <div class="name">手机号</div>
-        <div class="info"></div>
-      </div>
-      <div class="at-detail">
-        <div class="name">身份证</div>
-        <div class="info"></div>
-      </div>
-      <div class="at-detail">
         <div class="name">业务</div>
         <div class="info">{d.taskname}</div>
       </div>
       <div class="at-detail">
-        <div class="name">当前等待人数</div>
-        <div class="info"></div>
+        <div class="name">预约开始时间</div>
+        <div class="info">{d.appointtimestart}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">预约结束时间</div>
+        <div class="info">{d.appointtimeend}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">状态</div>
+        <div class="info">{d.status == 1 ? '已取号' : '过号'}</div>
       </div>
     </div>
     {/each}
@@ -74,15 +70,13 @@
         pageIndex: 1,
         pageSize: 10
       };
-
+      
       var User;
       $.isRegister(function(res) {
-        User = res.data;
+        User = res.custom
         doLoad();
       })
-
       
-
       $(window).scroll(function () {
           var totalheight = Math.ceil($(window).height()) + Math.ceil($(window).scrollTop());
           if ($(document).height() <= totalheight) {
@@ -97,12 +91,12 @@
       function doLoad() {
         loadData(function(res) {
           if (res.ret == 1) {
-            opts.total = res.data.totalcount;
+            opts.total = res.custom.totalcount;
             if (opts.total < opts.pageIndex*opts.pageSize) {
               opts.isOver = true;
             }
             opts.pageIndex ++;
-            $.render(opts.model,res.data,function(html) {
+            $.render(opts.model,res.custom,function(html) {
               $(opts.box).append(html);
               opts.isLoading = false;
               opts.isOneShow = false;
@@ -115,9 +109,18 @@
 
       function loadData(call) {
         opts.isLoading = true;
-        $.request('getAppointmentList',{ pageIndex: opts.pageIndex, pageSize: opts.pageSize },function(res) {
-          call && call(res);
-        }, 'get', User)
+        $.fetch({
+          url: '/hzqueueAppointment/private/getAppointList',
+          data: { 
+            currentpage: opts.pageIndex, 
+            pagesize: opts.pageSize,
+            type: 2
+          },
+          user: User,
+          success: function() {
+            call && call(res);
+          }
+        })
       }
 
     })

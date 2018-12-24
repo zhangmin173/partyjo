@@ -23,7 +23,7 @@
   </div>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each data as d}
+    {each themelist as d}
     <div class="affair">
       <div class="affair-hd">
         {d.themename}
@@ -46,14 +46,17 @@
         pageIndex: 1,
         pageSize: 10
       };
-
-      $.request('getTaskKindOU',{ 
-        lobbyType: id,
-        pageIndex: opts.pageIndex,
-        pageSize: opts.pageSize },function(res) {
-        $.render('tpl-main',res,function(html) {
-          $('#j-main').append(html);
-        })
+      $.fetch({
+        url: '/hzqueueAppointment/getHallThemes',
+        data: { 
+          hallguid: id,
+          shownum: 10
+        },
+        success: function(res) {
+          $.render('tpl-main',res.custom,function(html) {
+            $('#j-main').append(html);
+          })
+        }
       })
       
     })

@@ -42,12 +42,12 @@
   <button class="btn appoint-btn" type="button">同意并预约</button>
   <!-- 模板 -->
   <script id="tpl-main" type="text/html">
-    {each data as d i}
+    {each appointdatelist as d i}
     <li class="{if i == 0}active loaded{/if}" data-date="{d.appointdate}">{d.appointdate.substring(5,10)}</li>
     {/each}
   </script>
   <script id="tpl-time" type="text/html">
-    {each data as d i}
+    {each appointtimelist as d i}
       <div class="time-picker {if i == 0}active{/if}" data-stime="{d.appointtimestart}" data-etime="{d.appointtimeend}">
         <span class="time">{d.appointtimestart + '-' + d.appointtimeend}</span>
         <span class="num">余号：{d.appointmaxsum - d.appointsum}</span>
@@ -61,22 +61,25 @@
         dateIndex = 0;
 
       var User;
-
-      $.isRegister(function(r) {
-        User = r.data
-        $.request('getYuYueDateList',{ showDays: 5 },function(res) {
-          if (res.ret == 1) {
-            $.render('tpl-main',res,function(html) {
-            $('#j-main').append(html);
-            getTime(id,res.data[0].appointdate,function(d) {
-              $.render('tpl-time',d,function(_html) {
+      $.isRegister(function(res) {
+        User = res.custom
+        $.fetch({
+          url: '/hzqueueAppointment/getAppointDate',
+          data: { showdays: 5 },
+          user: User,
+          success: function(res) {
+            $.render('tpl-main',res.custom,function(html) {
+              $('#j-main').append(html);
+            })
+            getTime(id,res.custom.appointdatelist[0].appointdate,function(d) {
+              $.render('tpl-time',d.custom,function(_html) {
                 $('#j-wrap-0').html(_html);
               })
-            }, User)
-          })
+            })
           }
-        }, 'get', User);
+        })
       })
+      
 
       $('.time-wrap').on('click','.time-picker',function() {
         $(this).addClass('active').siblings().removeClass('active');
@@ -95,11 +98,11 @@
         } else {
           getTime(id,date,function(d) {
             $this.addClass('loaded');
-            $.render('tpl-time',d,function(_html) {
+            $.render('tpl-time',d.custom,function(_html) {
               $('#j-wrap-' + index).html(_html);
             })
             showTimeWrap(index);
-          }, User)
+          })
         }
       })
 
@@ -109,13 +112,11 @@
           et = '';
 
         if ($('#j-wrap-' + dateIndex).find('.active').size() <= 0) {
-          // $.pop('请选择预约时间段');
-          var d = { taskGuid: id, date: date, st: '08:30',et: '17.30' };
-          addNo(d);
+          $.pop('请选择预约时间段');
         } else {
           st = $('#j-wrap-' + dateIndex + ' .active').data('stime'),
           et = $('#j-wrap-' + dateIndex + ' .active').data('etime');
-          var d = { taskGuid: id, date: date, st: st,et: et };
+          var d = { taskguid: id, appointdate: date, appointtimestart: st,appointtimeend: et };
           addNo(d);
         }
       })
@@ -123,27 +124,34 @@
       function addNo(data,call) {
         var params = $.extend({}, {
           username: User.username,
-          idnum: User.idnum,
+          identitycardid: User.idnum,
           mobile: User.mobile,
-          token: User.token
+          token: User.token,
+          appointtype: 3
         }, data)
-        $.request('getYuYueQNO',params,function(res) {
-          $.pop(res.msg);
-          if (res.ret == 1) {
-            // ---
-            alert('预约成功，请携带有效证件前往')
-            // ---
-            // window.location.href = 'affair_appoint_detail.html?id=' + id;
+        $.fetch({
+          url: '/hzqueueAppointment/private/getAppointQno',
+          data: params,
+          user: User,
+          success: function(res) {
+            $.pop(res.msg);
+            window.location.href = 'affair_appoint_detail.html?id=' + id;
           }
         })
       }
 
-      function getTime(taskGuid,date,call, options) {
-        $.request('getYuYueTimeList',{ taskGuid: taskGuid, yuYueDate: date },function(res) {
-          if (res.ret == 1) {
+      function getTime(taskGuid,date,call) {
+        $.fetch({
+          url: '/hzqueueAppointment/private/getAppointTime',
+          data: { 
+            taskguid: taskGuid,
+            appointdate: date
+          },
+          user: User,
+          success: function(res) {
             call && call(res);
           }
-        }, 'get', options)
+        })
       }
 
       function showTimeWrap(index) {
