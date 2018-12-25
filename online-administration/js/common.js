@@ -1,12 +1,12 @@
 if (typeof jQuery == "undefined") {
     throw new Error("丢失jQuery库文件");
 }
-window.debug = true,
+window.debug = true
 window._global = {
 	browser: null,
     url: {
-        // api: '/api/'
-        api: '//wechat.nextdog.cc/partyjo-web/api/'
+        api: '/api/'
+        // api: '//wechat.nextdog.cc/partyjo-web/api/'
         //api: 'http://zhangmin.com/partyjo-web/api/'
     },
     root: 'https://yc.huzhou.gov.cn:8088/wsdt/rest',
@@ -175,7 +175,7 @@ window._global = {
                 );
             });
         },
-        isRegister: function(successcallback) {
+        isRegister: function(successcallback, errorcallback) {
             if (window.debug) {
                 $.fetch({
                     url: '/hzzwfwWxUser/wzUserDetailByOpenID',

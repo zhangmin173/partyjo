@@ -14,10 +14,17 @@ app.use(Express.static('./online-administration/'));
 //   changeOrigin: true
 // }));
 
-app.use(httpProxyMiddleware('/api', {
-  target: 'http://wechat.nextdog.cc/partyjo-web/',
+// app.use(httpProxyMiddleware('/api', {
+//   target: 'http://wechat.nextdog.cc/partyjo-web/123/',
+//   changeOrigin: true
+// }));
+
+const apiProxy = httpProxyMiddleware('/api', {
+  target: 'http://wechat.nextdog.cc/partyjo-web',
   changeOrigin: true
-}));
+})
+
+app.use('/api/*', apiProxy)
 
 app.all('*', (req, res) => {
   const filePath = path.join(__dirname, './online-administration/' + req.path)
