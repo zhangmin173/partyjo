@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script>
-    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+    !function (e, i) { var t = e.documentElement, n = navigator.userAgent.match(/iphone|ipod|ipad/gi), a = n ? Math.min(i.devicePixelRatio, 3) : 1, m = "orientationchange" in window ? "orientationchange" : "resize"; t.dataset.dpr = a; for (var d, l, c = !1, o = e.getElementsByTagName("meta"), r = 0; r < o.length; r++)l = o[r], "viewport" == l.name && (c = !0, d = l); if (c) d.content = "width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no"; else { var o = e.createElement("meta"); o.name = "viewport", o.content = "width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no", t.firstElementChild.appendChild(o) } var s = function () { var e = t.clientWidth; e / a > 640 && (e = 640 * a), window.remScale = e / 640, t.style.fontSize = 200 * (e / 640) + "px" }; s(), e.addEventListener && i.addEventListener(m, s, !1) }(document, window);
   </script>
   <link rel="stylesheet" href="css/common.css">
   <script src="lib/jquery/jquery-2.1.0.min.js"></script>
@@ -16,6 +17,7 @@
   <link rel="stylesheet" href="css/register.css">
   <title></title>
 </head>
+
 <body>
   <img class="login-hd" src="img/login_hd.png">
   <div id="j-chageLoginType" class="login-change">
@@ -35,31 +37,85 @@
     <div class="error"></div>
     <div class="btn-groups">
       <button id="j-btn" class="form-btn" type="button">登陆</button>
-      <a class="l" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">我要注册</a>
-      <a class="r" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html" title="">忘记密码</a>
+      <a class="l" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+        title="">我要注册</a>
+      <a class="r" href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+        title="">忘记密码</a>
     </div>
   </form>
   <div class="copyright">长兴县行政服务中心</div>
   <script>
-    $(function() {
+    $(function () {
       var loginType = 1;
       var targetUrl = $.getUrlPara('targetUrl')
       var OpenID = 'o9-y-0zpSkPbcDqRpUel0kK50Adc'
-      
-      $.request('is_oauth', { url: window.location.href }, function(res) {
-        var OpenID = res.data.openid
+
+      $.request('is_oauth', { url: window.location.href }, function (res) {
+        OpenID = res.data.openid
       })
       // YH.method.autoLoginForJs();//自动登录
-      function login(){
+      function login() {
         var loginname = document.getElementById("loginname").value;
         var loginpwd = document.getElementById("loginpwd").value;
         YH.method.loginForJs(loginname, loginpwd, "001003076");
       }
       //登录成功
-      YH.callback.loginAppForJs = function(ticket){
+      YH.callback.loginAppForJs = function (ticket) {
         console.log(ticket)
-        $.request('login', { ticket: ticket }, function(res) {
+        $.request('login', { ticket: ticket }, function (res) {
           var user = res.data
+          $.fetch({
+            url: '/hzzwfwWxUser/wzUserDetailByOpenID',
+            data: {
+              openid: OpenID,
+            },
+            success: function (rs) {
+              $.pop(res.custom.msg)
+              $.wxUserBind({
+                  mobile: user.mobile,
+                  password: loginpwd,
+                  openid: OpenID,
+                  encodepassword: $.encode(loginpwd)
+                }, function (res) {
+                  $.pop(res.custom.text)
+                  if (targetUrl) {
+                    location.href = targetUrl;
+                  } else {
+                    location.href = './user_center.html';
+                  }
+                }, function (res) {
+                  $.pop(res.custom.text)
+                })
+            },
+            fail: function (res) {
+              $.pop(res.custom.msg)
+              $.register({
+                username: user.name,
+                password: loginpwd,
+                mobile: user.mobile,
+                idnum: user.code
+              }, function (res) {
+                $.wxUserBind({
+                  mobile: user.mobile,
+                  password: loginpwd,
+                  openid: OpenID,
+                  encodepassword: $.encode(loginpwd)
+                }, function (res) {
+                  $.pop(res.custom.text)
+                  if (targetUrl) {
+                    location.href = targetUrl;
+                  } else {
+                    location.href = './user_center.html';
+                  }
+                }, function (res) {
+                  $.pop(res.custom.text)
+                })
+              }, function (res) {
+                $.pop(res.custom.text)
+                // location.href = './binding.html?openid=' + OpenID;
+              })
+            }
+          })
           $.wxUserBind({
             mobile: user.mobile,
             password: loginpwd,
@@ -71,30 +127,8 @@
             } else {
               location.href = './user_center.html';
             }
-          }, function(res) {
-            $.register({
-              username: user.name,
-              password: loginpwd,
-              mobile: user.mobile,
-              idnum: user.code
-            }, function(res) {
-              $.wxUserBind({
-                mobile: user.mobile,
-                password: loginpwd,
-                openid: OpenID,
-                encodepassword: $.encode(loginpwd)
-              }, function (res) {
-                if (targetUrl) {
-                  location.href = targetUrl;
-                } else {
-                  location.href = './user_center.html';
-                }
-              }, function(res) {
-                $.pop(res.msg)
-              })
-            }, function(res) {
-              location.href = './binding.html?openid=' + OpenID;
-            })
+          }, function (res) {
+
           })
         })
         // $.ajax({
@@ -128,11 +162,11 @@
       }
 
       //登录失败
-      YH.callback.showErrcode = function(errorMsg, errorcode){
+      YH.callback.showErrcode = function (errorMsg, errorcode) {
         $('.error').html(errorMsg);
       }
 
-      $('#j-btn').on('click', function(event) {
+      $('#j-btn').on('click', function (event) {
         if (loginType) {
           login();
         } else {
@@ -145,7 +179,7 @@
         console.log('login2');
         var loginname = document.getElementById("loginname").value;
         var loginpwd = document.getElementById("loginpwd").value;
-        $.request('login2',{ loginname: loginname, loginpwd: loginpwd },function(res) {
+        $.request('login2', { loginname: loginname, loginpwd: loginpwd }, function (res) {
           if (res.ret == 1) {
             window.location.href = 'user_center.html';
           } else {
@@ -154,10 +188,10 @@
         })
       }
 
-      $('#j-chageLoginType').on('click','a',function() {
+      $('#j-chageLoginType').on('click', 'a', function () {
         $('#j-chageLoginType').find('a').removeClass('active');
         $(this).addClass('active');
-        if($(this).index() == 0) {
+        if ($(this).index() == 0) {
           loginType = 1;
         } else {
           loginType = 0;
@@ -167,4 +201,5 @@
     })
   </script>
 </body>
+
 </html>
