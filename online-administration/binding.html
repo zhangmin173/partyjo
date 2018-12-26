@@ -41,13 +41,13 @@
     $(function () {
       var targetUrl = $.getUrlPara('targetUrl')
 
-      $.isRegister(function (res) {
-        if (targetUrl) {
-          location.href = targetUrl
-        } else {
-          location.href = './user_center.html'
-        }
-      })
+      // $.isRegister(function (res) {
+      //   if (targetUrl) {
+      //     location.href = targetUrl
+      //   } else {
+      //     location.href = './user_center.html'
+      //   }
+      // })
 
       function r(r, e) {
         return !(!e || "string" != typeof e) && 1 == r.test(e)

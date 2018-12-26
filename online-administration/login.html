@@ -68,7 +68,8 @@
         <button id="j-btn" class="form-btn" type="button">登陆</button>
         <a
           class="l"
-          href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+          id="j-register"
+          href="javascript:;"
           title=""
           >我要注册</a
         >
@@ -123,6 +124,14 @@
 
         $('#j-btn').on('click', function() {
           login()
+        })
+
+        $('#j-register').on('click', function() {
+          var _u = './register.html?openid=' + OpenID
+          if (targetUrl) {
+            _u += '&targetUrl=' + encodeURIComponent(targetUrl)
+          }
+          location.href = _u
         })
 
         // 登录
@@ -183,8 +192,8 @@
           })
         }
 
-        YH.callback.showErrcode = function(res) {
-
+         YH.callback.showErrcode = function(errorMsg, errorcode){
+          $('.error').html(errorMsg);
         }
 
         $('#j-chageLoginType').on('click', 'a', function() {

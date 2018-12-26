@@ -10,7 +10,7 @@ window._global = {
         //api: 'http://zhangmin.com/partyjo-web/api/'
     },
     root: 'https://yc.huzhou.gov.cn:8088/wsdt/rest',
-    key: 'USERINFO'
+    key: 'WXUSERINFO'
 };
 
 +function($) {
@@ -193,6 +193,7 @@ window._global = {
                 }) 
             } else {
                 $.request('is_oauth', { url: window.location.href }, function(res) {
+                    console.log(res)
                     var OpenID = res.data.openid
                     $.fetch({
                         url: '/hzzwfwWxUser/wzUserDetailByOpenID',
@@ -206,7 +207,7 @@ window._global = {
                         fail: function(res) {
                             $.pop(res.custom.text)
                             var targetUrl = location.href;
-                            errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
+                            errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/binding.html?openid=' + OpenID + '&targetUrl=' + encodeURIComponent(targetUrl);
                         }
                     })
                 })
@@ -235,13 +236,6 @@ window._global = {
                     errorcallback && errorcallback(res)
                 }
             })
-            // $.request('wxUserRegister', data, function(res) {
-            //     if (res.ret == 1) {
-            //         successcallback(res);
-            //     } else {
-            //         errorcallback && errorcallback(res)
-            //     }
-            // })
         },
         encodeUtf8: function (s1) {
             var s = escape(s1);
@@ -289,6 +283,7 @@ window._global = {
             var userinfo = JSON.parse(window.localStorage.getItem(window._global.key))
             if (url === 'is_oauth' && userinfo) {
                 window._global.user = userinfo
+                console.log(userinfo)
                 call && call({
                     data: userinfo
                 });
