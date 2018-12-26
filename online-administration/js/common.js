@@ -1,12 +1,12 @@
 if (typeof jQuery == "undefined") {
     throw new Error("丢失jQuery库文件");
 }
-window.debug = true
+window.debug = false
 window._global = {
 	browser: null,
     url: {
-        api: '/api/'
-        // api: '//wechat.nextdog.cc/partyjo-web/api/'
+        // api: '/api/'
+        api: '//wechat.nextdog.cc/partyjo-web/api/'
         //api: 'http://zhangmin.com/partyjo-web/api/'
     },
     root: 'https://yc.huzhou.gov.cn:8088/wsdt/rest',
@@ -213,22 +213,35 @@ window._global = {
             }
         },
         wxUserBind: function(data, successcallback, errorcallback) {
-            $.request('wxUserBind', data, function(res) {
-                if (res.ret == 1) {
-                    successcallback(res);
-                } else {
+            $.fetch({
+                url: '/hzzwfwWxUser/wxUserBind',
+                data: data,
+                success: function(res) {
+                    successcallback(res)
+                },
+                fail: function(res) {
                     errorcallback && errorcallback(res)
                 }
             })
         },
         register: function(data, successcallback, errorcallback) {
-            $.request('wxUserRegister', data, function(res) {
-                if (res.ret == 1) {
-                    successcallback(res);
-                } else {
+            $.fetch({
+                url: '/hzzwfwWxUser/wxUserRegister',
+                data: data,
+                success: function(res) {
+                    successcallback(res)
+                },
+                fail: function(res) {
                     errorcallback && errorcallback(res)
                 }
             })
+            // $.request('wxUserRegister', data, function(res) {
+            //     if (res.ret == 1) {
+            //         successcallback(res);
+            //     } else {
+            //         errorcallback && errorcallback(res)
+            //     }
+            // })
         },
         encodeUtf8: function (s1) {
             var s = escape(s1);
@@ -503,6 +516,12 @@ window._global = {
                 $('.m-loading').remove();
             } else {
                 $('body').append(_html);
+            }
+        },
+        // 加载动画
+        loadingEnd: function() {
+            if ($('.m-loading').size()) {
+                $('.m-loading').remove();
             }
         },
         // 回到顶部

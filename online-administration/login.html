@@ -46,21 +46,10 @@
       var targetUrl = $.getUrlPara('targetUrl')
       var OpenID = 'o9-y-0zpSkPbcDqRpUel0kK50Adc'
       
-      // $.ajax({
-      //   url: _global.url.api + 'is_oauth',
-      //   type: 'post',
-      //   dataType: 'json',
-      //   data:  { url: window.location.href },
-      //   success: function(res) {
-      //     if (res.ret === 1001) {
-      //       location.href = res.data
-      //     } else {
-      //       OpenID = res.data.openid
-      //       YH.method.autoLoginForJs();//自动登录
-      //     }
-      //   }
-      // })
-      YH.method.autoLoginForJs();//自动登录
+      $.request('is_oauth', { url: window.location.href }, function(res) {
+        var OpenID = res.data.openid
+      })
+      // YH.method.autoLoginForJs();//自动登录
       function login(){
         var loginname = document.getElementById("loginname").value;
         var loginpwd = document.getElementById("loginpwd").value;
@@ -69,30 +58,73 @@
       //登录成功
       YH.callback.loginAppForJs = function(ticket){
         console.log(ticket)
-        return
-        $.ajax({
-          url: _global.url.api + 'login',
-          type: 'get',
-          dataType: 'json',
-          data: { ticket: ticket },
-          timeout: 3000,
-          success: function(res) {
-            $.wxUserBind({
-              mobile: res.data.mobile,
+        $.request('login', { ticket: ticket }, function(res) {
+          var user = res.data
+          $.wxUserBind({
+            mobile: user.mobile,
+            password: loginpwd,
+            openid: OpenID,
+            encodepassword: $.encode(loginpwd)
+          }, function (res) {
+            if (targetUrl) {
+              location.href = targetUrl;
+            } else {
+              location.href = './user_center.html';
+            }
+          }, function(res) {
+            $.register({
+              username: user.name,
               password: loginpwd,
-              openid: OpenID,
-              encodepassword: $.encode(loginpwd)
-            }, function (res) {
-              if (targetUrl) {
-                location.href = targetUrl;
-              } else {
-                location.href = './user_center.html';
-              }
+              mobile: user.mobile,
+              idnum: user.code
             }, function(res) {
-              $.pop(res.msg)
+              $.wxUserBind({
+                mobile: user.mobile,
+                password: loginpwd,
+                openid: OpenID,
+                encodepassword: $.encode(loginpwd)
+              }, function (res) {
+                if (targetUrl) {
+                  location.href = targetUrl;
+                } else {
+                  location.href = './user_center.html';
+                }
+              }, function(res) {
+                $.pop(res.msg)
+              })
+            }, function(res) {
+              location.href = './binding.html?openid=' + OpenID;
             })
-          }
+          })
         })
+        // $.ajax({
+        //   url: _global.url.api + 'login',
+        //   type: 'post',
+        //   dataType: 'json',
+        //   data: { ticket: ticket },
+        //   timeout: 3000,
+        //   success: function(res) {
+        //     $.loadingEnd()
+        //     if (res.ret === 1) {
+        //       $.wxUserBind({
+        //         mobile: res.data.mobile,
+        //         password: loginpwd,
+        //         openid: OpenID,
+        //         encodepassword: $.encode(loginpwd)
+        //       }, function (res) {
+        //         if (targetUrl) {
+        //           location.href = targetUrl;
+        //         } else {
+        //           location.href = './user_center.html';
+        //         }
+        //       }, function(res) {
+        //         $.pop(res.msg)
+        //       })
+        //     } else {
+        //       $.pop(res.msg)
+        //     }
+        //   }
+        // })
       }
 
       //登录失败
