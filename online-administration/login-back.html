@@ -58,8 +58,7 @@
     <div class="line"></div>
     <form class="form login-form">
       <div class="form-item">
-        <label>手机号：</label>
-        <input id="loginname" type="text" name="mobile" />
+        <label>手机号：</label> <input id="loginname" type="text" name="mobile" />
       </div>
       <div class="form-item">
         <label>密码：</label> <input id="loginpwd" type="text" name="pwd" />
@@ -69,21 +68,22 @@
         <button id="j-btn" class="form-btn" type="button">登陆</button>
         <a
           class="l"
-          href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+          id="j-register"
+          href="javascript:;"
           title=""
           >我要注册</a
         >
-        <a
+        <!-- <a
           class="r"
           href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
           title=""
-          >忘记密码</a
-        >
+          >忘记密码</a> -->
       </div>
     </form>
     <div class="copyright">长兴县行政服务中心</div>
     <script>
       $(function() {
+
         var loginType = 1;
         var targetUrl = $.getUrlPara('targetUrl');
         var OpenID = null;
@@ -98,7 +98,7 @@
             },
             success: function(res) {
               // 已经注册并且绑定
-              console.log(res);
+              console.log(res)
               if (targetUrl) {
                 location.href = targetUrl;
               } else {
@@ -109,9 +109,9 @@
               // 未注册或未绑定
               // $.pop(res.custom.text)
             }
-          });
+          })
         });
-
+        
         // 完成操作返回
         function goback() {
           if (targetUrl) {
@@ -122,19 +122,19 @@
         }
 
         $('#j-btn').on('click', function() {
-          login();
-        });
+          login()
+        })
 
         $('#j-register').on('click', function() {
-          var _u = './register.html?openid=' + OpenID;
+          var _u = './register.html?openid=' + OpenID
           if (targetUrl) {
-            _u += '&targetUrl=' + encodeURIComponent(targetUrl);
+            _u += '&targetUrl=' + encodeURIComponent(targetUrl)
           }
-          location.href = _u;
-        });
+          location.href = _u
+        })
 
         // 登录
-        var mobile, password;
+        var mobile, password
         function login() {
           mobile = document.getElementById('loginname').value;
           password = document.getElementById('loginpwd').value;
@@ -145,65 +145,55 @@
         YH.callback.loginAppForJs = function(ticket) {
           console.log(ticket);
           // 换取登录信息
-          $.request(
-            'login',
-            {
-              ticket: ticket
-            },
-            function(res) {
-              console.log(res);
-              if (res.ret == 1) {
-                var user = res.data;
-                // 校验
-                $.fetch({
-                  url: '/zwdtRegister/checkPhoneExist',
-                  data: {
-                    mobile: mobile
-                  },
-                  success: function(res) {
-                    $.pop('正在自动登录中');
-                    $.register(
-                      {
-                        username: user.name,
-                        mobile: mobile,
-                        password: password,
-                        idnum: user.code
-                      },
-                      function(res) {
-                        // 再绑定
-                        $.wxUserBind(
-                          {
-                            mobile: mobile,
-                            password: password,
-                            openid: OpenID,
-                            encodepassword: $.encode(password)
-                          },
-                          function(res) {
-                            $.pop(res.custom.text);
-                            goback();
-                          },
-                          function(res) {
-                            $.pop(res.custom.text);
-                          }
-                        );
-                      },
-                      function(res) {
-                        $.pop(res.custom.text);
-                      }
-                    );
-                  },
-                  fail: function(res) {
-                    $.pop(res.custom.text + '，正在自动登录中');
-                  }
-                });
-              }
+          $.request('login', {
+            ticket: ticket
+          }, function(res) { 
+            console.log(res)
+            if (res.ret == 1) {
+              var user = res.data
+              // 尝试绑定
+              $.wxUserBind({
+                mobile: mobile,
+                password: password,
+                openid: OpenID,
+                encodepassword: $.encode(password)
+              }, function(res) {
+                // 绑定成功
+                $.pop(res.custom.text);
+                goback()
+              }, function(res) {
+                // 绑定失败，则先注册再绑定
+                // $.pop(res.custom.text);
+                $.register({
+                  username: user.name,
+                  mobile: mobile,
+                  password: password,
+                  idnum: user.code
+                }, function(res) {
+                  // 再绑定
+                  $.pop(res.custom.text);
+                  $.wxUserBind({
+                    mobile: mobile,
+                    password: password,
+                    openid: OpenID,
+                    encodepassword: $.encode(password)
+                  }, function(res) {
+                    $.pop(res.custom.text);
+                    goback()
+                  }, function(res) {
+                    $.pop(res.custom.text);
+                  })
+                }, function(res) {
+                  $.pop(res.custom.text);
+                })
+              });
             }
-          );
-        };
+          })
+        }
 
-        YH.callback.showErrcode = function(errorMsg, errorcode) {
+         YH.callback.showErrcode = function(errorMsg, errorcode){
           $('.error').html(errorMsg);
-        };
+        }
 
         $('#j-chageLoginType').on('click', 'a', function() {
           $('#j-chageLoginType')
@@ -216,6 +206,7 @@
             loginType = 0;
           }
         });
+
       });
     </script>
   </body>
