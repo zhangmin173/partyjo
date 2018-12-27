@@ -188,7 +188,7 @@ window._global = {
                     fail: function(res) {
                         $.pop(res.custom.text)
                         var targetUrl = location.href;
-                        errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
+                        errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/login.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
                     }
                 }) 
             } else {
@@ -216,6 +216,18 @@ window._global = {
         wxUserBind: function(data, successcallback, errorcallback) {
             $.fetch({
                 url: '/hzzwfwWxUser/wxUserBind',
+                data: data,
+                success: function(res) {
+                    successcallback(res)
+                },
+                fail: function(res) {
+                    errorcallback && errorcallback(res)
+                }
+            })
+        },
+        wxNewUserBind: function(data, successcallback, errorcallback) {
+            $.fetch({
+                url: '/hzzwfwWxUser/wxNewUserBind',
                 data: data,
                 success: function(res) {
                     successcallback(res)

@@ -138,12 +138,14 @@
         function login() {
           mobile = document.getElementById('loginname').value;
           password = document.getElementById('loginpwd').value;
+          console.log(password)
           YH.method.loginForJs(mobile, password, '001003076');
         }
 
         //登录成功
         YH.callback.loginAppForJs = function(ticket) {
           console.log(ticket);
+          // return;
           // 换取登录信息
           $.request(
             'login',
@@ -173,7 +175,7 @@
                         // 再绑定
                         $.wxUserBind(
                           {
-                            mobile: mobile,
+                            idnumormobile: mobile,
                             password: password,
                             openid: OpenID,
                             encodepassword: $.encode(password)
@@ -194,6 +196,21 @@
                   },
                   fail: function(res) {
                     $.pop(res.custom.text + '，正在自动登录中');
+                    $.wxUserBind(
+                      {
+                        idnumormobile: mobile,
+                        password: password,
+                        openid: OpenID,
+                        encodepassword: $.encode(password)
+                      },
+                      function(res) {
+                        $.pop(res.custom.text);
+                        goback();
+                      },
+                      function(res) {
+                        $.pop(res.custom.text);
+                      }
+                    );
                   }
                 });
               }
