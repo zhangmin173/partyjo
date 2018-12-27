@@ -188,7 +188,7 @@ window._global = {
                     fail: function(res) {
                         $.pop(res.custom.text)
                         var targetUrl = location.href;
-                        errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
+                        errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/bindind.html?openid=' + res.data.openid + '&targetUrl=' + targetUrl;
                     }
                 }) 
             } else {
@@ -207,7 +207,7 @@ window._global = {
                         fail: function(res) {
                             $.pop(res.custom.text)
                             var targetUrl = location.href;
-                            errorcallback ? errorcallback() : location.href = '/partyjo/online-administration/binding.html?openid=' + OpenID + '&targetUrl=' + encodeURIComponent(targetUrl);
+                            errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/binding.html?openid=' + OpenID + '&targetUrl=' + encodeURIComponent(targetUrl);
                         }
                     })
                 })

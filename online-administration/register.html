@@ -59,6 +59,8 @@
         } else {
           location.href = './user_center.html'
         }
+      }, function(res) {
+        
       })
 
       function r(r, e) {
@@ -125,7 +127,7 @@
           }
           location.href = url
         }, function(res) {
-          $.pop(res.msg)
+          $.pop(res.custom.text)
         })
       }
 

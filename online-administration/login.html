@@ -43,7 +43,7 @@
     <script src="lib/jquery/jquery-2.1.0.min.js"></script>
     <script src="lib/template/template.min.js"></script>
     <script src="js/common.min.js"></script>
-    <script type="text/javascript" src="js/zjzw.js"></script>
+    <script type="text/javascript" src="js/zjzw.min.js"></script>
     <!-- 页面资源 -->
     <link rel="stylesheet" href="css/register.css" />
     <title></title>
@@ -73,12 +73,11 @@
           title=""
           >我要注册</a
         >
-        <a
+        <!-- <a
           class="r"
           href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
           title=""
-          >忘记密码</a
-        >
+          >忘记密码</a> -->
       </div>
     </form>
     <div class="copyright">长兴县行政服务中心</div>
@@ -87,7 +86,7 @@
 
         var loginType = 1;
         var targetUrl = $.getUrlPara('targetUrl');
-        var OpenID = 'o9-y-0zpSkPbcDqRpUel0kK50Adc';
+        var OpenID = null;
         // 授权
         $.request('is_oauth', { url: window.location.href }, function(res) {
           OpenID = res.data.openid;
