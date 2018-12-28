@@ -142,6 +142,7 @@
           YH.method.loginForJs(mobile, password, '001003076');
         }
 
+        var user
         //登录成功
         YH.callback.loginAppForJs = function(ticket) {
           console.log(ticket);
@@ -155,7 +156,7 @@
             function(res) {
               console.log(res);
               if (res.ret == 1) {
-                var user = res.data;
+                user = res.data;
                 // 校验
                 $.fetch({
                   url: '/zwdtRegister/checkPhoneExist',
@@ -166,10 +167,10 @@
                     $.pop('正在自动登录中');
                     $.register(
                       {
-                        username: user.name,
+                        username: user.username,
                         mobile: mobile,
                         password: password,
-                        idnum: user.code
+                        idnum: user.idnum
                       },
                       function(res) {
                         // 再绑定
