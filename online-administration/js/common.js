@@ -207,7 +207,7 @@ window._global = {
                         fail: function(res) {
                             $.pop(res.custom.text)
                             var targetUrl = location.href;
-                            errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/binding.html?openid=' + OpenID + '&targetUrl=' + encodeURIComponent(targetUrl);
+                            errorcallback ? errorcallback(res) : location.href = '/partyjo/online-administration/login.html?openid=' + OpenID + '&targetUrl=' + encodeURIComponent(targetUrl);
                         }
                     })
                 })
@@ -333,7 +333,7 @@ window._global = {
                         
                     } else {
                         if (confirm('现在去注册？')) {
-                            window.location.href = 'register.html';
+                            window.location.href = 'login.html';
                         }
                     }
                     window.localStorage.setItem(window._global.key, JSON.stringify(res.data))
