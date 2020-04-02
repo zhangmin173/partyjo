@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.min.js"></script>
+  <!-- 插件资源 -->
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/affair.css">
+  <title></title>
+</head>
+<body>
+  <div class="nav-hd ft">主题列表</div>
+  <div id="j-main" class="container">
+
+  </div>
+  <!-- 模板 -->
+  <script id="tpl-main" type="text/html">
+    {each themelist as d}
+    <div class="affair">
+      <div class="affair-hd">
+        {d.themename}
+      </div>
+      <div class="affair-bd">
+        <div class="affair-btns">
+          <a class="btn-l" href="affair_appoint.html?id={d.themeguid}">网上预约</a>
+        </div>
+      </div>
+    </div>
+    {/each}
+  </script>
+  <script>
+    $(function() {
+      var id = $.getUrlPara('id');
+
+      var opts = {
+        box: '#j-main',
+        model: 'tpl-main',
+        pageIndex: 1,
+        pageSize: 10
+      };
+
+      $.fetch({
+        url: '/hzqueueAppointment/getChildThemes',
+        data: { 
+          themeguid: id,
+          shownum: 10
+        },
+        success: function(res) {
+          $.render('tpl-main',res.custom,function(html) {
+            $('#j-main').append(html);
+          })
+        }
+      })
+      
+    })
+  </script>
+</body>
+</html>

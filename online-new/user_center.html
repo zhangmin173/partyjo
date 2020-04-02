@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.min.js?v1"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/user_center.css">
+  <title></title>
+</head>
+<body>
+  <div class="user-hd">
+    <div class="headimg"></div>
+    <div class="user-info">
+      <div class="name j-name">游客</div>
+      <div class="number j-number"></div>
+    </div>
+  </div>
+  <div class="block">
+    <a class="user-list" href="affair_appoint_detail.html">
+      <i class="icon icon-sm icon-yuyuejilu i-l"></i>
+      <span class="name">预约记录</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
+    </a>
+    <!-- <a class="user-list" href="query_detail.html">
+      <i class="icon icon-sm icon-banshijilu i-l"></i>
+      <span class="name">办事记录</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
+    </a> -->
+  </div>
+   <!-- <div class="block">
+    <a class="user-list" href="">
+      <i class="icon icon-sm icon-dizhi i-l"></i>
+      <span class="name">我的收件地址</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
+    </a>
+  </div>
+  <div class="block">
+    <a class="user-list" href="">
+      <i class="icon icon-sm icon-tuichudenglu i-l"></i>
+      <span class="name">退出登陆</span>
+      <i class="icon icon-sm icon-youjiantou i-r"></i>
+    </a>
+  </div> -->
+  <script>
+    $(function() {
+      $.isRegister(function(res) {
+        if (res.wx && res.wx.headimgurl) {
+          $('.headimg').css('background-image','url('+res.wx.headimgurl+')');
+        }
+        $('.j-name').text(res.custom.username);
+        $('.j-number').text(res.custom.mobile);
+      })
+    })
+  </script>
+</body>
+</html>

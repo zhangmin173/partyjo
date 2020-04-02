@@ -6,7 +6,7 @@ const httpProxyMiddleware = require('http-proxy-middleware')
 const port = 2222
 const mock = require('./mock')
 
-app.use(Express.static('./online-administration/'));
+app.use(Express.static('./online-new/'));
 
 
 // app.use(httpProxyMiddleware('/partyjo-web', {
@@ -27,7 +27,7 @@ const apiProxy = httpProxyMiddleware('/api', {
 app.use('/api/*', apiProxy)
 
 app.all('*', (req, res) => {
-  const filePath = path.join(__dirname, './online-administration/' + req.path)
+  const filePath = path.join(__dirname, './online-new/' + req.path)
   if (fs.existsSync(filePath)) {
     console.log(req.path)
     res.send(fs.readFileSync(filePath, 'utf-8'))

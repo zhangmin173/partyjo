@@ -1,0 +1,143 @@
+@import url('components/_variable.less');
+
+// .date-wrap {
+// 	overflow-y: auto;
+// }
+
+.date {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	//width: 1000/@rem;
+	height: 70/@rem;
+	background-color: #fff;
+	margin-bottom: 25/@rem;
+
+	li {
+		float: left;
+		display: inline-block;
+		//width: 200/@rem;
+		width: 150/@rem;
+		text-align: center;
+		line-height: 70/@rem;
+		font-size: 30/@rem;
+		color: #000;
+		border-bottom: 10/@rem solid #fff;
+
+		&.active {
+			border-color: @primary;
+		}
+	}
+}
+
+.main {
+	margin-bottom: 15/@rem;
+	padding: 30/@rem 25/@rem;
+	background-color: #fff;
+
+	.address-detail {
+		font-size: 28/@rem;
+		color: #666;
+	}
+
+	.title {
+		margin-bottom: 20/@rem;
+		font-size: 30/@rem;
+		color: #000;
+	}
+
+	.content {
+		padding-left: 40/@rem;
+		font-size: 28/@rem;
+		color: #000;
+	}
+}
+
+.mh {
+	min-height: 400/@rem;
+}
+
+.appoint-btn {
+	position: fixed;
+	left: 50%;
+	bottom: 58/@rem;
+	width: 538/@rem;
+	margin-left: -538/@rem/2;
+	height: 70/@rem;
+	line-height: 70/@rem;
+	font-size: 30/@rem;
+}
+
+.time-wrap {
+	overflow: hidden;
+}
+
+.time-picker {
+	float: left;
+	display: inline-block;
+	width: 220/@rem;
+	height: 100/@rem;
+	margin-bottom: 20/@rem;
+	margin-right: 10/@rem;
+	padding-top: 10/@rem;
+	font-size: 28/@rem;
+
+	text-align: center;
+	box-sizing: border-box;
+	background-color: #fff;
+	color: #000;
+	border: 2/@rem solid #ddd;
+	border-radius: 10/@rem;
+
+	&.active {
+		background-color: @primary;
+		border-color: @primary;
+		color: #fff;
+	}
+
+	span {
+		display: block;
+	}
+
+	.time {
+		margin-bottom: 12/@rem;
+	}
+}
+
+// .time-picker {
+// 	height: 100/@rem;
+// 	margin-bottom: 30/@rem;
+// 	border: 2/@rem solid @primary;
+// 	box-sizing: border-box;
+// 	border-radius: 10/@rem;
+
+
+// 	.time-item {
+// 		float: left;
+// 		display: inline-block;
+// 		width: 230/@rem;
+// 		height: 100%;
+// 		padding-top: 10/@rem;
+// 		font-size: 28/@rem;
+// 		color: #000;
+// 		text-align: center;
+// 		box-sizing: border-box;
+
+// 		&:not(:last-child) {
+// 			border-right: 2/@rem solid @primary;
+// 		}
+
+// 		&.active {
+// 			background-color: @primary;
+// 			color: #fff;
+// 		}
+
+// 		span {
+// 			display: block;
+// 		}
+
+// 		.time {
+// 			margin-bottom: 12/@rem;
+// 		}
+// 	}
+// }

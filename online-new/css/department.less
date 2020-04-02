@@ -1,0 +1,50 @@
+@import url('components/_variable.less');
+@import url('components/_icon.less');
+
+.dpt {
+	display: block;
+	height: 150/@rem;
+	background-color: #fff;
+	margin-bottom: 20/@rem;
+
+	.dpt-left {
+		float: left;
+		display: inline-block;
+		width: 150/@rem;
+		padding-top: 45/@rem;
+		height: 100%;
+		text-align: center;
+		box-sizing: border-box;
+	}
+
+	.dpt-mid {
+		float: left;
+		display: inline-block;
+		width: 475/@rem;
+		padding-top: 15/@rem;
+
+		.name {
+			padding: 15/@rem 0;
+			font-size: 32/@rem;
+			color: #000;
+			border-bottom: 2/@rem solid #ddd;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.intro {
+			padding: 15/@rem 0;
+			font-size: 26/@rem;
+			color: #666;
+		}
+	}
+	.dpt-right {
+		float: left;
+		display: inline-block;
+		padding-top: 60/@rem;
+		width: 125/@rem;
+		text-align: center;
+		box-sizing: border-box;
+	}
+}

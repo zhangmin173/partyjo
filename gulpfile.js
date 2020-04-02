@@ -10,7 +10,7 @@ var gulp = require('gulp'), // gulp打包工具
 var autoprefixOptions = {
     browsers: ['last 2 versions', '>1%', 'Android >= 3.2'],
 }
-var game = 'online-administration';
+var game = 'online-new';
 
 // 合并所有js到all.js
 gulp.task('concat', function () {

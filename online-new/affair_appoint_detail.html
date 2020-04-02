@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function(e,i){var t=e.documentElement,n=navigator.userAgent.match(/iphone|ipod|ipad/gi),a=n?Math.min(i.devicePixelRatio,3):1,m="orientationchange"in window?"orientationchange":"resize";t.dataset.dpr=a;for(var d,l,c=!1,o=e.getElementsByTagName("meta"),r=0;r<o.length;r++)l=o[r],"viewport"==l.name&&(c=!0,d=l);if(c)d.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no";else{var o=e.createElement("meta");o.name="viewport",o.content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no",t.firstElementChild.appendChild(o)}var s=function(){var e=t.clientWidth;e/a>640&&(e=640*a),window.remScale=e/640,t.style.fontSize=200*(e/640)+"px"};s(),e.addEventListener&&i.addEventListener(m,s,!1)}(document,window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.min.js"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/affair_appoint_detail.css">
+  <title></title>
+</head>
+<body>
+  <div class="nav-hd">预约记录</div>
+  <div id="j-main" class="container">
+
+  </div>
+  <!-- 模板 -->
+  <script id="tpl-main" type="text/html">
+    {each appointdatelist as d}
+    <div class="at-wrap">
+      <div class="at-detail">
+        <div class="name">票码</div>
+        <div class="info">{d.queueguid}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">取号时间</div>
+        <div class="info">{d.createdate}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">部门</div>
+        <div class="info">{d.ouname}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">业务</div>
+        <div class="info">{d.taskname}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">预约开始时间</div>
+        <div class="info">{d.appointtimestart}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">预约结束时间</div>
+        <div class="info">{d.appointtimeend}</div>
+      </div>
+      <div class="at-detail">
+        <div class="name">状态</div>
+        <div class="info">{d.status == 1 ? '已取号' : '过号'}</div>
+      </div>
+    </div>
+    {/each}
+  </script>
+  <script>
+    $(function() {
+
+       var opts = {
+        box: '#j-main',
+        model: 'tpl-main',
+        isOver: false,
+        isLoading: false,
+        isOneShow: true,
+        initNoData: '',
+        noData: '',
+        errorData: '',
+        pageIndex: 1,
+        pageSize: 10
+      };
+      
+      var User;
+      $.isRegister(function(res) {
+        User = res.custom
+        doLoad();
+      })
+      
+      $(window).scroll(function () {
+          var totalheight = Math.ceil($(window).height()) + Math.ceil($(window).scrollTop());
+          if ($(document).height() <= totalheight) {
+              if (opts.isOver == false && opts.isLoading == false) {
+                doLoad();
+              } else if (opts.isOver) {
+                console.log('没有更多数据了');
+              }
+          }
+      });
+
+      function doLoad() {
+        loadData(function(res) {
+          if (res.ret == 1) {
+            opts.total = res.custom.totalcount;
+            if (opts.total < opts.pageIndex*opts.pageSize) {
+              opts.isOver = true;
+            }
+            opts.pageIndex ++;
+            $.render(opts.model,res.custom,function(html) {
+              $(opts.box).append(html);
+              opts.isLoading = false;
+              opts.isOneShow = false;
+            })
+          } else {
+            console.log(res.msg);
+          }
+        })
+      }
+
+      function loadData(call) {
+        opts.isLoading = true;
+        $.fetch({
+          url: '/hzqueueAppointment/private/getAppointList',
+          data: { 
+            currentpage: opts.pageIndex, 
+            pagesize: opts.pageSize,
+            type: 2
+          },
+          user: User,
+          success: function() {
+            call && call(res);
+          }
+        })
+      }
+
+    })
+  </script>
+</body>
+</html>

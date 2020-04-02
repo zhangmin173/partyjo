@@ -1,0 +1,81 @@
+@import url('components/_variable.less');
+@import url('components/_icon.less');
+
+.user-hd {
+	position: relative;
+	height: 200/@rem;
+	background-color: @primary;
+
+	.headimg {
+		position: absolute;
+		left: 20/@rem;
+		top: 35/@rem;
+		width: 127/@rem;
+		height: 127/@rem;
+		border-radius: 50%;
+		background-size: 100%;
+		background-image: url('../img/icon/gerentouxiang.png');
+		background-color: #eee;
+	}
+
+	.user-info {
+		position: absolute;
+		left: 200/@rem;
+		top: 35/@rem;
+		padding: 15/@rem 0;
+		font-size: 36/@rem;
+		color: #fff;
+
+		.name {
+			margin-bottom: 35/@rem;
+		}
+
+		.number {
+
+		}
+	}
+}
+
+.user-list {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	height: 75/@rem;
+	background-color: #fff;
+
+	.i-l {
+		float: left;
+		margin-top: 35/@rem/2;
+		margin-left: 30/@rem;
+	}
+
+	.name {
+		margin-left: 30/@rem;
+		font-size: 36/@rem;
+		color: #000;
+		line-height: 75/@rem;
+	}
+
+	.i-r {
+		position: absolute;
+		right: 30/@rem;
+		top: 35/@rem/2;
+	}
+
+	&:not(:last-child):after {
+		position: absolute;
+		content: '';
+		display: block;
+		left: 30/@rem;
+		right: 0;
+		bottom: 0;
+		height: 2/@rem;
+		background-color: #ddd;
+	}
+}
+
+.block {
+	margin-bottom: 15/@rem;
+	border-top: 2/@rem solid #ddd;
+	border-bottom: 2/@rem solid #ddd;
+}

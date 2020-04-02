@@ -1,0 +1,58 @@
+@import url('components/_variable.less');
+
+.container {
+	padding-top: 60/@rem;
+}
+
+.aff {
+
+	.aff-hd {
+		padding: 20/@rem;
+		background-color: @primary;
+		border-top-left-radius: 10/@rem;
+		border-top-right-radius: 10/@rem;
+		color: #fff;
+		font-size: 28/@rem;
+		line-height: 1.42;
+	}
+
+	.aff-bd {
+		border-width: 2/@rem;
+		border-style: solid;
+		border-color: transparent #ddd transparent;
+		background-color: #fff;
+		box-sizing: border-box;
+	}
+
+	.aff-detail {
+		overflow: hidden;
+		border-bottom: 2/@rem solid #ddd;
+		box-sizing: border-box;
+
+		.name {
+			float: left;
+			display: inline-block;
+			width: 130/@rem;
+			height: 100%;
+			padding-top: 20/@rem;
+			text-align: center;
+			font-size: 28/@rem;
+			color: #666;
+			box-sizing: border-box;
+		}
+
+		.info {
+			float: left;
+			display: inline-block;
+			height: 100%;
+			padding: 20/@rem;
+			width: 570/@rem;
+			height: 100%;
+			font-size: 30/@rem;
+			color: #000;
+			border-left: 2/@rem solid #ddd;
+			box-sizing: border-box;
+		}
+	}
+
+}

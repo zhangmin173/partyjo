@@ -1,0 +1,129 @@
+@import url('components/_variable.less');
+
+.menu-wrap {
+	overflow: hidden;
+	background-color: #fff;
+	margin-bottom: 15/@rem;
+
+	.menu {
+		display: inline-block;
+		float: left;
+		padding-top: 20/@rem;
+		width: 187.5/@rem;
+		height: 187.5/@rem;
+		text-decoration: none;
+
+		.menu-icon {
+			margin: 0 auto;
+			width: 96/@rem;
+			height: 96/@rem;
+			background-size: 100%;
+			background-color: #eee;
+		}
+
+		.menu-name {
+			margin-top: .1rem;
+			text-align: center;
+			font-size: 28/@rem;
+			color: #666;
+		}
+	}
+}
+
+.block-wrap {
+	overflow: hidden;
+	background-color: #fff;
+	margin-bottom: 15/@rem;
+	padding: 15/@rem;
+
+	.block-wrap-title {
+		padding-bottom: 20/@rem;
+		font-size: 30/@rem;
+		color: #000;
+		font-weight: 600;
+		border-bottom: 2/@rem solid #ddd;
+
+		.more {
+			font-size: 28/@rem;
+			color: #666;
+			float: right;
+			text-decoration: none;
+		}
+	}
+
+	.block {
+		display: inline-block;
+		float: left;
+		padding-top: 20/@rem;
+		margin-top: 20/@rem;
+		width: 180/@rem;
+		height: 160/@rem;
+		text-decoration: none;
+		box-sizing: border-box;
+		border-bottom: 2/@rem solid #ddd;
+
+		&.br {
+			border-right: 2/@rem solid #ddd;
+		}
+
+		.block-icon {
+			margin: 0 auto;
+			width: 65/@rem;
+			height: 65/@rem;
+			background-size: 100%;
+			background-color: #eee;
+		}
+
+		.block-name {
+			margin-top: .1rem;
+			text-align: center;
+			font-size: 28/@rem;
+			color: #666;
+		}
+	}
+}
+
+.news-wrap {
+	overflow: hidden;
+	background-color: #fff;
+	margin-bottom: 15/@rem;
+	padding: 15/@rem;
+
+	.news-wrap-title {
+		padding-bottom: 20/@rem;
+		font-size: 30/@rem;
+		color: #000;
+		font-weight: 600;
+		border-bottom: 2/@rem solid #ddd;
+
+		.more {
+			font-size: 28/@rem;
+			color: #666;
+			float: right;
+			text-decoration: none;
+		}
+	}
+
+	.news {
+		display: block;
+		padding: 15/@rem 0;
+		text-decoration: none;
+
+		.news-title {
+			margin-bottom: 10/@rem;
+			font-size: 28/@rem;
+			color: #000;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.news-desc {
+			height: 60/@rem;
+			line-height: 30/@rem;
+			font-size: 24/@rem;
+			color: #999;
+			overflow: hidden;
+		}
+	}
+}

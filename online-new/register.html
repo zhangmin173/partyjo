@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    !function (e, i) { var t = e.documentElement, n = navigator.userAgent.match(/iphone|ipod|ipad/gi), a = n ? Math.min(i.devicePixelRatio, 3) : 1, m = "orientationchange" in window ? "orientationchange" : "resize"; t.dataset.dpr = a; for (var d, l, c = !1, o = e.getElementsByTagName("meta"), r = 0; r < o.length; r++)l = o[r], "viewport" == l.name && (c = !0, d = l); if (c) d.content = "width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no"; else { var o = e.createElement("meta"); o.name = "viewport", o.content = "width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no", t.firstElementChild.appendChild(o) } var s = function () { var e = t.clientWidth; e / a > 640 && (e = 640 * a), window.remScale = e / 640, t.style.fontSize = 200 * (e / 640) + "px" }; s(), e.addEventListener && i.addEventListener(m, s, !1) }(document, window);
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+  <script src="lib/template/template.min.js"></script>
+  <script src="js/common.min.js"></script>
+  <!-- 页面资源 -->
+  <link rel="stylesheet" href="css/register.css">
+  <title></title>
+</head>
+
+<body>
+  <img class="login-hd" src="img/login_hd.png">
+  <form class="form login-form">
+    <div class="form-item">
+      <label>用户名</label>
+      <input type="text" placeholder="请输入您的用户名" id="labLoginID" maxlength="50">
+    </div>
+    <div class="form-item">
+      <label>手机号</label>
+      <input type="tel" placeholder="请输入您的手机号" id="labMobile" maxlength="15">
+    </div>
+    <div class="form-item">
+      <label>身份证号</label>
+      <input type="text" placeholder="请输入您的身份证号" id="labIDcard" maxlength="25">
+    </div>
+    <div class="form-item">
+      <label>密码</label>
+      <input type="password" placeholder="请输入您的密码" id="labPassword" maxlength="20">
+    </div>
+    <div class="form-item">
+      <label>确认密码</label>
+      <input type="password" placeholder="请再次输入您的密码" id="labPassword2" maxlength="20">
+    </div>
+    <div class="error"></div>
+    <div class="btn-groups">
+      <button id="j-btn" class="form-btn" type="button">注册</button>
+      <button id="j-bind" class="form-btn bind" type="button">我已注册</button>
+    </div>
+  </form>
+  <div class="copyright">长兴县政务服务中心</div>
+  <script>
+    var loginType = 1;
+
+    $(function () {
+      var targetUrl = $.getUrlPara('targetUrl')
+      
+      $.isRegister(function (res) {
+        if (targetUrl) {
+          location.href = targetUrl
+        } else {
+          location.href = './user_center.html'
+        }
+      }, function(res) {
+        
+      })
+
+      function r(r, e) {
+        return !(!e || "string" != typeof e) && 1 == r.test(e)
+      }
+      var isPhoneNumber = function(e) {
+        var n = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579]|19[89])[0-9]{8}$/;
+        return r(n, e)
+      }
+
+      function login() {
+        var kongreg = /\s/;
+        var UserName = document.getElementById("labLoginID").value;
+        var Password = document.getElementById("labPassword").value;
+        var secPassword = document.getElementById("labPassword2").value;
+        var mobile = document.getElementById("labMobile").value;
+        var idCard = document.getElementById("labIDcard").value;
+        if (UserName == '') {
+          $.pop('用户名不能为空!');
+          return;
+        }
+        if (mobile == '') {
+          $.pop('手机号不能为空!');
+          return;
+        }
+        if (idCard == '') {
+          $.pop('身份证号不能为空!');
+          return;
+        }
+        if (Password == '') {
+          $.pop('密码不能为空!');
+          return;
+        }
+        var namefirst = UserName.slice(0, 1);
+        if (kongreg.test(UserName)) {
+          $.pop('用户名不允许输入空格!');
+          return false;
+        }
+        if (!isPhoneNumber(mobile)) {
+          $.pop('手机号输入不正确!');
+          return;
+        }
+        if ($.trim(idCard).length != 18) {
+          $.pop('身份证号输入不正确!');
+          return;
+        }
+        if (Password.length < 6) {
+          $.pop('密码不能少于6位字符!');
+          return;
+        }
+        if (Password != secPassword) {
+          $.pop('两次输入密码不一致!');
+          return;
+        }
+        $.register({
+          mobile: mobile,
+          password: Password,
+          username: UserName,
+          idnum: idCard.toUpperCase()
+        }, function (res) {
+          var url = './binding.html?openid=' + window._global.user.openid;
+          if (targetUrl) {
+            url = url + '&targetUrl=' + targetUrl
+          }
+          location.href = url
+        }, function(res) {
+          $.pop(res.custom.text)
+        })
+      }
+
+      $('#j-bind').on('click', function() {
+        var url = './binding.html?openid=' + window._global.user.openid;
+        if (targetUrl) {
+          url = url + '&targetUrl=' + targetUrl
+        }
+        location.href = url
+      })
+
+      $('#j-btn').on('click', function (event) {
+        login();
+      });
+
+      $('#j-chageLoginType').on('click', 'a', function () {
+        $('#j-chageLoginType').find('a').removeClass('active');
+        $(this).addClass('active');
+        if ($(this).index() == 0) {
+          loginType = 1;
+        } else {
+          loginType = 0;
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

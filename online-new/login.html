@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script>
+      !(function(e, i) {
+        var t = e.documentElement,
+          n = navigator.userAgent.match(/iphone|ipod|ipad/gi),
+          a = n ? Math.min(i.devicePixelRatio, 3) : 1,
+          m = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        t.dataset.dpr = a;
+        for (
+          var d, l, c = !1, o = e.getElementsByTagName('meta'), r = 0;
+          r < o.length;
+          r++
+        )
+          (l = o[r]), 'viewport' == l.name && ((c = !0), (d = l));
+        if (c)
+          d.content =
+            'width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no';
+        else {
+          var o = e.createElement('meta');
+          (o.name = 'viewport'),
+            (o.content =
+              'width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no'),
+            t.firstElementChild.appendChild(o);
+        }
+        var s = function() {
+          var e = t.clientWidth;
+          e / a > 640 && (e = 640 * a),
+            (window.remScale = e / 640),
+            (t.style.fontSize = 200 * (e / 640) + 'px');
+        };
+        s(), e.addEventListener && i.addEventListener(m, s, !1);
+      })(document, window);
+    </script>
+    <link rel="stylesheet" href="css/common.css" />
+    <script src="lib/jquery/jquery-2.1.0.min.js"></script>
+    <script src="lib/template/template.min.js"></script>
+    <script src="js/common.min.js"></script>
+    <script type="text/javascript" src="js/zjzw.min.js"></script>
+    <!-- 页面资源 -->
+    <link rel="stylesheet" href="css/register.css" />
+    <title></title>
+  </head>
+
+  <body>
+    <img class="login-hd" src="img/login_hd.png" />
+    <div id="j-chageLoginType" class="login-change">
+      <a class="active" href="javascript:;">个人登陆</a>
+      <a href="javascript:;">法人登陆</a>
+    </div>
+    <div class="line"></div>
+    <form class="form login-form">
+      <div class="form-item">
+        <label>手机号：</label>
+        <input id="loginname" type="text" name="mobile" />
+      </div>
+      <div class="form-item">
+        <label>密码：</label> <input id="loginpwd" type="password" name="pwd" />
+      </div>
+      <div class="error"></div>
+      <div class="btn-groups">
+        <button id="j-btn" class="form-btn" type="button">登陆</button>
+        <a
+          class="l"
+          href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=mobileRegisterUser&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+          title=""
+          >我要注册</a
+        >
+        <a
+          class="r"
+          href="https://puser.zjzwfw.gov.cn/sso/usp.do?action=findPwd&type=2&servicecode=hzycsl&goto=https://wechat.nextdog.cc/partyjo/online-administration/register.html"
+          title=""
+          >忘记密码</a
+        >
+      </div>
+    </form>
+    <div class="copyright">长兴县政务服务中心</div>
+    <script>
+      $(function() {
+        var loginType = 1;
+        var targetUrl = $.getUrlPara('targetUrl');
+        var OpenID = null;
+        // 授权
+        $.request('is_oauth', { url: window.location.href }, function(res) {
+          OpenID = res.data.openid;
+          // 是否本地注册
+          $.fetch({
+            url: '/hzzwfwWxUser/wzUserDetailByOpenID',
+            data: {
+              openid: OpenID
+            },
+            success: function(res) {
+              // 已经注册并且绑定
+              console.log(res);
+              if (targetUrl) {
+                location.href = targetUrl;
+              } else {
+                location.href = './user_center.html';
+              }
+            },
+            fail: function(res) {
+              // 未注册或未绑定
+              // $.pop(res.custom.text)
+            }
+          });
+        });
+
+        // 完成操作返回
+        function goback() {
+          if (targetUrl) {
+            location.href = targetUrl;
+          } else {
+            location.href = './user_center.html';
+          }
+        }
+
+        $('#j-btn').on('click', function() {
+          login();
+        });
+
+        $('#j-register').on('click', function() {
+          var _u = './register.html?openid=' + OpenID;
+          if (targetUrl) {
+            _u += '&targetUrl=' + encodeURIComponent(targetUrl);
+          }
+          location.href = _u;
+        });
+
+        // 登录
+        var mobile, password;
+        function login() {
+          mobile = document.getElementById('loginname').value;
+          password = document.getElementById('loginpwd').value;
+          console.log(password)
+          YH.method.loginForJs(mobile, password, '001003076');
+        }
+
+        var user
+        //登录成功
+        YH.callback.loginAppForJs = function(ticket) {
+          console.log(ticket);
+          // return;
+          // 换取登录信息
+          $.request(
+            'login',
+            {
+              ticket: ticket
+            },
+            function(res) {
+              console.log(res);
+              if (res.ret == 1) {
+                user = res.data;
+                // 校验
+                $.fetch({
+                  url: '/zwdtRegister/checkPhoneExist',
+                  data: {
+                    mobile: mobile
+                  },
+                  success: function(res) {
+                    $.pop('正在自动登录中');
+                    $.register(
+                      {
+                        username: user.username,
+                        mobile: mobile,
+                        password: password,
+                        idnum: user.idnum
+                      },
+                      function(res) {
+                        // 再绑定
+                        $.wxUserBind(
+                          {
+                            idnumormobile: mobile,
+                            password: password,
+                            openid: OpenID,
+                            encodepassword: $.encode(password)
+                          },
+                          function(res) {
+                            $.pop(res.custom.text);
+                            goback();
+                          },
+                          function(res) {
+                            $.pop(res.custom.text);
+                          }
+                        );
+                      },
+                      function(res) {
+                        $.pop(res.custom.text);
+                      }
+                    );
+                  },
+                  fail: function(res) {
+                    $.pop(res.custom.text + '，正在自动登录中');
+                    $.wxUserBind(
+                      {
+                        idnumormobile: mobile,
+                        password: password,
+                        openid: OpenID,
+                        encodepassword: $.encode(password)
+                      },
+                      function(res) {
+                        $.pop(res.custom.text);
+                        goback();
+                      },
+                      function(res) {
+                        $.pop(res.custom.text);
+                      }
+                    );
+                  }
+                });
+              }
+            }
+          );
+        };
+
+        YH.callback.showErrcode = function(errorMsg, errorcode) {
+          $('.error').html(errorMsg);
+        };
+
+        $('#j-chageLoginType').on('click', 'a', function() {
+          $('#j-chageLoginType')
+            .find('a')
+            .removeClass('active');
+          $(this).addClass('active');
+          if ($(this).index() == 0) {
+            loginType = 1;
+          } else {
+            loginType = 0;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
